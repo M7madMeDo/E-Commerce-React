@@ -1,16 +1,28 @@
-# React + Vite
+E-Commerce React
+A modern, responsive e-commerce web application built with the latest React ecosystem. This project focuses on a clean user interface, seamless navigation, and efficient state management for a superior shopping experience.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 Tech Stack
+Framework: React 19
 
-Currently, two official plugins are available:
+Styling: Tailwind CSS v4 (using the new @tailwindcss/vite plugin)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Routing: React Router v7
 
-## React Compiler
+Icons: React Icons
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Alerts: SweetAlert2
 
-## Expanding the ESLint configuration
+Utilities: js-cookie for client-side cookie management.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Build Tool: Vite
+
+✨ Features
+Product Management: Browse products and view detailed information via dynamic routing.
+
+Shopping Cart: Fully functional cart system with persistent settings via custom hooks.
+
+User Authentication: Dedicated pages for Login, Registration, and Profile management.
+
+Responsive Layout: Uses a MainLayout component to ensure a consistent experience across all devices.
+
+Modern UI: High-performance styling with the latest Tailwind CSS version.
