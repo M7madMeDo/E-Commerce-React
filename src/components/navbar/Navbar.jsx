@@ -181,7 +181,7 @@ export default function Navbar() {
 
           <div className="flex gap-6 pt-4 border-t border-gray-200">
             <button className="text-6xl hover:text-gray-600 transition">
-              <CiHeart />
+              <FaHeart />
             </button>
             <Link
               to="/shopCart"

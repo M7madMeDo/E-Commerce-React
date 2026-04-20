@@ -63,7 +63,7 @@ export default function OrderSummary({ cartItems = [] }) {
       <div className="space-y-4 text-sm text-gray-600 mb-6 border-b border-[#E5E5E5] pb-6">
         <div className="flex justify-between">
           <span>Subtotal</span>
-          <span className="text-black font-medium">${subtotal}</span>
+          <span className="text-black font-medium">${subtotal.toFixed(2)}</span>
         </div>
         <div className="flex justify-between">
           <span>Estimated Tax </span>

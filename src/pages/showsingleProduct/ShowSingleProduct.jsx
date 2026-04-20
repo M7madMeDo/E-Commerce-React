@@ -1,4 +1,4 @@
-import { data, Link, useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import SingleProductCard from "../../components/singleproductCard/SingleProductCard";
 import { FaEye } from "react-icons/fa";

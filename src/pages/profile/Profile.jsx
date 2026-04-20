@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 export default function Profile() {
   const [token, setToken] = useState("");
-  const [User, setUser] = useState([]);
+  const [User, setUser] = useState({});
   useEffect(() => {
     const savedToken = Cookies.get("Token");
     if (savedToken) {
       setToken(savedToken);
-      fetch("https://dummyjson.com/user/me", {
+      fetch("https://dummyjson.com/auth/me", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${savedToken} `,

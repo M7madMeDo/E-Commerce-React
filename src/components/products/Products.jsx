@@ -31,9 +31,9 @@ export default function Products({ activeCategories }) {
   };
 
   useEffect(() => {
-    getProductsdata();
-    setCurrentPage(1);
     setloding(true);
+    setCurrentPage(1);
+    getProductsdata();
   }, [activeCategories]);
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
