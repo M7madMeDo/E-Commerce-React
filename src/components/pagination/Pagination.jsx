@@ -25,10 +25,14 @@ export default function Pagination({
   return (
     <div className="flex justify-center items-center gap-4 mt-25 transition-all ">
       <button
-        className="p-3 cursor-pointer hover:bg-gray-400 rounded-4xl"
+        className={
+          currentPage == 1
+            ? ""
+            : "p-3 cursor-pointer hover:bg-gray-400 rounded-4xl"
+        }
         onClick={() => handlePrev()}
       >
-        <FaArrowLeft />
+        {currentPage == 1 ? " " : <FaArrowLeft />}
       </button>
       {pages.map((page, i) => (
         <button
@@ -44,10 +48,14 @@ export default function Pagination({
         </button>
       ))}
       <button
-        className="p-3 cursor-pointer hover:bg-gray-400 rounded-4xl"
+        className={
+          totalPages == currentPage
+            ? ""
+            : "p-3 cursor-pointer hover:bg-gray-400 rounded-4xl"
+        }
         onClick={() => handleNext()}
       >
-        <FaArrowRight />
+        {totalPages == currentPage ? "" : <FaArrowRight />}{" "}
       </button>
     </div>
   );
