@@ -82,12 +82,16 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center gap-6">
           <div className="flex items-center gap-4">
-            <button className="text-3xl hover:text-red-700 transition ">
+            <button
+              aria-label="wishlist"
+              className="text-3xl hover:text-red-700 transition "
+            >
               <FaHeart />
             </button>
             <Link
               to="/shopCart"
               className="text-3xl hover:text-gray-600 transition"
+              aria-label="Shopping Cart"
             >
               <CiShoppingCart />
             </Link>
