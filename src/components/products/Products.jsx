@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import Pagination from "../pagination/Pagination";
-import { Link } from "react-router";
 import { FaEye } from "react-icons/fa";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { useCart } from "../../hooks/cartSettings/CartSettings";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router";
+
 export default function Products({ activeCategories }) {
-  const [products, setproducts] = useState([]);
-  const [loading, setloding] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(6);
   const [token, setToken] = useState("");
   const { addToCart } = useCart();
+
   const getProductsdata = async () => {
     if (activeCategories && activeCategories.length > 0) {
       const res = activeCategories.map((cat) =>
@@ -20,30 +21,34 @@ export default function Products({ activeCategories }) {
         ),
       );
       const results = await Promise.all(res);
-      const combined = results.flatMap((data) => data.products);
-      setproducts(combined);
+      return results.flatMap((data) => data.products);
     } else {
       const res = await fetch("https://dummyjson.com/products?limit=60");
       const data = await res.json();
-      setproducts(data.products);
+      return data.products;
     }
-    setloding(false);
   };
 
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ["products", activeCategories],
+    queryFn: getProductsdata,
+  });
+
   useEffect(() => {
-    setloding(true);
     setCurrentPage(1);
-    getProductsdata();
   }, [activeCategories]);
+
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = products.slice(firstPostIndex, lastPostIndex);
+
   useEffect(() => {
     const savedToken = Cookies.get("Token");
     if (savedToken) {
       setToken(savedToken);
     }
   }, []);
+
   function handleAddtoCart(pro) {
     if (!token) {
       Swal.fire({
@@ -58,16 +63,17 @@ export default function Products({ activeCategories }) {
       addToCart(pro);
     }
   }
+
   return (
     <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-8">
       <div className="mb-6 flex items-center justify-between">
         <span className="text-gray-600 text-lg">
           Available Products:
-          <span className="font-bold text-black">{products.length}</span>
+          <span className="font-bold text-black ml-1">{products.length}</span>
         </span>
       </div>
 
-      {loading ? (
+      {isLoading ? (
         <div className="flex justify-center items-center h-64">
           <span className="loader border-4 border-gray-200 border-t-black rounded-full w-12 h-12 animate-spin"></span>
         </div>

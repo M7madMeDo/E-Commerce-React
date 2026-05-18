@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoMdArrowDown, IoMdArrowUp } from "react-icons/io";
 export default function Aside({ onApply }) {
-  const [categorys, setcategory] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [isMenuOpen, setisMenuOpen] = useState(true);
   const handleCheck = (cat) => {
@@ -12,15 +12,15 @@ export default function Aside({ onApply }) {
       setSelectedCategories([...selectedCategories, cat]);
     }
   };
-
   const CategoriesData = async () => {
     const res = await fetch("https://dummyjson.com/products/category-list");
     const data = await res.json();
-    setcategory(data);
+    return data;
   };
-  useEffect(() => {
-    CategoriesData();
-  }, []);
+  const { data: categorys = [], isLoading } = useQuery({
+    queryKey: ["categorys"],
+    queryFn: CategoriesData,
+  });
 
   return (
     <aside className=" w-full md:w-65 shrink-0">
@@ -43,22 +43,28 @@ export default function Aside({ onApply }) {
             className="bg-transparent outline-none text-sm w-full text-black"
           />
         </div>
-        <ul className="space-y-3 mb-8">
-          {categorys.map((cat, i) => (
-            <li key={i} className="flex items-center gap-2">
-              <input
-                onChange={() => handleCheck(cat)}
-                type="checkbox"
-                id={cat}
-                checked={selectedCategories.includes(cat)}
-                className="w-4 h-4 accent-black"
-              />
-              <label htmlFor={cat} className="capitalize text-sm">
-                {cat}
-              </label>
-            </li>
-          ))}
-        </ul>
+        {isLoading ? (
+          <div className="flex justify-center items-center h-64">
+            <span className="loader border-4 border-gray-200 border-t-black rounded-full w-12 h-12 animate-spin"></span>
+          </div>
+        ) : (
+          <ul className="space-y-3 mb-8">
+            {categorys.map((cat, i) => (
+              <li key={i} className="flex items-center gap-2">
+                <input
+                  onChange={() => handleCheck(cat)}
+                  type="checkbox"
+                  id={cat}
+                  checked={selectedCategories.includes(cat)}
+                  className="w-4 h-4 accent-black"
+                />
+                <label htmlFor={cat} className="capitalize text-sm">
+                  {cat}
+                </label>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <button
           onClick={() => onApply(selectedCategories)}
