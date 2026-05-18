@@ -52,7 +52,7 @@ export default function Products({ activeCategories }) {
   function handleAddtoCart(pro) {
     if (!token) {
       Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "error",
         title: "You need to Login First",
         showConfirmButton: false,
