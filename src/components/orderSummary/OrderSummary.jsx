@@ -8,10 +8,10 @@ export default function OrderSummary({ cartItems = [] }) {
   const tax = cartItems.length ? 0.14 : "";
   const estimatedTax = subtotal * tax;
   const finalPricee = subtotal + estimatedTax;
-  function fakeHadnleCheckout() {
+  function handleCheckout() {
     if (cartItems.length == 0) {
       Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "error",
         title: "Empty Cart",
         showConfirmButton: false,
@@ -20,7 +20,7 @@ export default function OrderSummary({ cartItems = [] }) {
       return;
     } else {
       Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "success",
         title: "Payment Done",
         showConfirmButton: false,
@@ -85,7 +85,7 @@ export default function OrderSummary({ cartItems = [] }) {
       </div>
 
       <button
-        onClick={() => fakeHadnleCheckout()}
+        onClick={() => handleCheckout()}
         className="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-colors cursor-pointer"
       >
         Checkout
