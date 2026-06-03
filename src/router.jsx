@@ -7,6 +7,9 @@ import ShowSingleProduct from "./pages/showsingleProduct/ShowSingleProduct";
 import Profile from "./pages/profile/Profile";
 import Error from "./pages/error/Error";
 import ShopingCart from "./pages/shopingCart/ShopingCart";
+import AuthRoute from "./protectedRoute/authRoute/AuthRoute";
+import GuestRoute from "./protectedRoute/guestRoute/GuestRoute";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,24 +21,34 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/login",
-        element: <Login />,
+        element: <GuestRoute />,
+        children: [
+          {
+            path: "/login",
+            element: <Login />,
+          },
+          {
+            path: "/register",
+            element: <Register />,
+          },
+        ],
       },
       {
-        path: "/register",
-        element: <Register />,
+        element: <AuthRoute />,
+        children: [
+          {
+            path: "/profile",
+            element: <Profile />,
+          },
+          {
+            path: "/shopCart",
+            element: <ShopingCart />,
+          },
+        ],
       },
       {
         path: "/singleProduct/:id",
         element: <ShowSingleProduct />,
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
-      },
-      {
-        path: "/shopCart",
-        element: <ShopingCart />,
       },
     ],
   },
