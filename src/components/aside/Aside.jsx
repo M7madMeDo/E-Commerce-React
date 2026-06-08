@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoMdArrowDown, IoMdArrowUp } from "react-icons/io";
 export default function Aside({ onApply }) {
@@ -21,6 +21,9 @@ export default function Aside({ onApply }) {
     queryKey: ["categorys"],
     queryFn: CategoriesData,
   });
+  useEffect(() => {
+    setisMenuOpen(false);
+  }, []);
 
   return (
     <aside className=" w-full md:w-65 shrink-0">

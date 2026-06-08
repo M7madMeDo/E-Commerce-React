@@ -4,13 +4,14 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { Link, NavLink, useNavigate } from "react-router";
 import Cookies from "js-cookie";
 import { FaHeart } from "react-icons/fa";
+import { useCart } from "../../hooks/cartSettings/CartSettings";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [token, setToken] = useState("");
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
-
+  const { cartItems } = useCart();
   useEffect(() => {
     const savedToken = Cookies.get("Token");
     if (savedToken) {
@@ -102,24 +103,28 @@ export default function Navbar() {
               Blog
             </NavLink>
           </nav>
-
           <div className="hidden lg:flex items-center gap-6">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-5">
               <button
                 aria-label="wishlist"
-                className="text-3xl hover:text-red-700 transition"
+                className="text-gray-700 hover:text-red-600 transition-colors duration-200 focus:outline-none"
               >
-                <FaHeart />
+                <FaHeart size={26} />
               </button>
+
               <Link
                 to="/shopCart"
-                className="text-3xl hover:text-gray-600 transition"
+                className="relative text-gray-700 hover:text-gray-900 transition-colors duration-200 p-1 flex items-center justify-center"
                 aria-label="Shopping Cart"
               >
-                <CiShoppingCart />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 bg-red-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 shadow-sm">
+                    {cartItems.length}
+                  </span>
+                )}
+                <CiShoppingCart size={30} />
               </Link>
             </div>
-
             {token ? (
               <div className="flex items-center border-l border-gray-300 pl-6 gap-4">
                 <Link

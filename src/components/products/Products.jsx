@@ -110,7 +110,7 @@ export default function Products({ activeCategories }) {
                   className="max-h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-in-out mix-blend-multiply"
                 />
 
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                <div className="absolute top-4 right-4 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                   <Link
                     to={`/singleProduct/${pro.id}`}
                     className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-[0_2px_10px_rgb(0,0,0,0.1)] text-gray-500 hover:text-black hover:scale-105 transition-all"
