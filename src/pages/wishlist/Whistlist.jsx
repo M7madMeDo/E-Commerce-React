@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { FaTrash, FaShoppingCart, FaHeart, FaCheck } from "react-icons/fa";
 import { useCart } from "../../hooks/cartSettings/CartSettings";
@@ -6,19 +5,11 @@ import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
 export default function Wishlist() {
-  const { addToCart, cartItems } = useCart();
-  const [wishlistItems, setWishlistItems] = useState([]);
-
-  useEffect(() => {
-    const savedWishlist = localStorage.getItem("wishlist");
-    if (savedWishlist) {
-      setWishlistItems(JSON.parse(savedWishlist));
-    }
-  }, []);
+  const { addToCart, cartItems, wishlist, setwishlist } = useCart();
 
   const delFromWishlist = (id) => {
-    const updatedWishlist = wishlistItems.filter((item) => item.id !== id);
-    setWishlistItems(updatedWishlist);
+    const updatedWishlist = wishlist.filter((item) => item.id !== id);
+    setwishlist(updatedWishlist);
     localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
     Swal.fire({
       toast: true,
@@ -45,7 +36,7 @@ export default function Wishlist() {
     addToCart(product);
   };
 
-  if (wishlistItems.length === 0) {
+  if (wishlist.length === 0) {
     return (
       <section className="container mx-auto px-4 py-20 text-center bg-white flex flex-col items-center justify-center min-h-[70vh]">
         <div className="w-20 h-20 bg-[#F8F9FA] rounded-full flex items-center justify-center text-gray-400 mb-6 border border-[#EBEBEB]">
@@ -74,11 +65,11 @@ export default function Wishlist() {
           My Wishlist
         </h1>
         <span className="bg-black text-white text-xs font-semibold px-2.5 py-1 rounded-full">
-          {wishlistItems.length} Items
+          {wishlist.length} Items
         </span>
       </div>
       <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6">
-        {wishlistItems.map((item) => {
+        {wishlist.map((item) => {
           const isInCart = cartItems?.some(
             (cartItem) => cartItem.id === item.id,
           );

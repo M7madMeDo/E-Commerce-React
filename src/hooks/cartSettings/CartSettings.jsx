@@ -102,6 +102,7 @@ export default function CartSettings({ children }) {
       value={{
         toggleWishlist,
         wishlist,
+        setwishlist,
         cartItems,
         addToCart,
         deleteFromTheCart,

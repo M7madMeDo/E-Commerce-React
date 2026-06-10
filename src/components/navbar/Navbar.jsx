@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CiSearch, CiShoppingCart, CiUser } from "react-icons/ci";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { Link, NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import Cookies from "js-cookie";
 import { FaHeart } from "react-icons/fa";
 import { useCart } from "../../hooks/cartSettings/CartSettings";
@@ -12,12 +12,14 @@ export default function Navbar() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
   const { cartItems, wishlist } = useCart();
+  const loaction = useLocation();
+
   useEffect(() => {
     const savedToken = Cookies.get("Token");
     if (savedToken) {
       setToken(savedToken);
     }
-  }, []);
+  }, [loaction.pathname]);
 
   function handleLogout() {
     if (!token) return;
@@ -30,133 +32,112 @@ export default function Navbar() {
       navigate("/");
     }, 800);
   }
+
   const closeMenu = () => setIsMenuOpen(false);
+
   return (
     <>
       {isLoggingOut && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-9999 flex flex-col justify-center items-center transition-opacity duration-300">
-          <span className="w-14 h-14 border-4 border-gray-300 border-t-white rounded-full animate-spin mb-4"></span>
-          <h2 className="text-white text-xl font-medium tracking-wide animate-pulse">
-            Logging out...
+        <div className="fixed inset-0 bg-white/80 backdrop-blur-md z-9999 flex flex-col justify-center items-center transition-all duration-500">
+          <span className="w-12 h-12 border-4 border-gray-200 border-t-black rounded-full animate-spin mb-5"></span>
+          <h2 className="text-gray-900 text-lg font-bold tracking-wider animate-pulse">
+            Logging out securely
           </h2>
         </div>
       )}
 
-      <header className="border-b border-[#B5B5B5] bg-white sticky top-0 z-50">
-        <div className="container mx-auto py-4 flex justify-between items-center gap-4 lg:gap-16">
-          <Link to={"/"} onClick={closeMenu} className="shrink-0 px-4">
+      <header className="border-b border-gray-100 bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-[0_4px_30px_rgba(0,0,0,0.02)]">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 py-3.5 flex justify-between items-center gap-6 lg:gap-12">
+          <Link to={"/"} onClick={closeMenu} className="shrink-0 group">
             <img
               src="/assets/pics/Logo.webp"
               alt="logo"
-              className="h-8 w-auto"
+              className="h-8 w-auto group-hover:opacity-80 transition-opacity"
             />
           </Link>
 
-          <div className="hidden md:flex items-center justify-center grow max-w-92.5 bg-[#F5F5F5] rounded-lg p-4 gap-2">
-            <CiSearch className="text-2xl text-[#989898]" />
+          <div className="hidden md:flex items-center grow max-w-md bg-gray-50 focus-within:bg-white border border-transparent focus-within:border-gray-200 focus-within:shadow-sm rounded-xl px-4 py-2.5 transition-all duration-300">
+            <CiSearch className="text-xl text-gray-400 shrink-0" />
             <input
               type="text"
-              placeholder="Search"
-              className="bg-transparent outline-none text-sm w-full text-black"
+              placeholder="Search products..."
+              className="bg-transparent outline-none text-sm w-full text-gray-900 placeholder-gray-400 ml-2 font-medium"
             />
           </div>
 
           <nav className="hidden lg:flex items-center gap-8">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-black font-medium"
-                  : "text-[#989898] hover:text-black"
-              }
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-black font-medium"
-                  : "text-[#989898] hover:text-black"
-              }
-            >
-              About
-            </NavLink>
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-black font-medium"
-                  : "text-[#989898] hover:text-black"
-              }
-            >
-              Contact Us
-            </NavLink>
-            <NavLink
-              to="/blog"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-black font-medium"
-                  : "text-[#989898] hover:text-black"
-              }
-            >
-              Blog
-            </NavLink>
+            {["Home", "About", "Contact", "Blog"].map((item) => (
+              <NavLink
+                key={item}
+                to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                className={({ isActive }) =>
+                  `text-sm font-semibold transition-colors duration-300 relative py-1 ${
+                    isActive
+                      ? "text-black after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-black after:rounded-full"
+                      : "text-gray-500 hover:text-black"
+                  }`
+                }
+              >
+                {item === "Contact" ? "Contact Us" : item}
+              </NavLink>
+            ))}
           </nav>
+
           <div className="hidden lg:flex items-center gap-6">
             <div className="flex items-center gap-5">
               <Link
                 to="/whislist"
                 aria-label="wishlist"
-                className=" relative text-gray-700 hover:text-red-600 transition-colors duration-200 focus:outline-none"
+                className="relative text-gray-600 hover:text-red-500 transition-colors duration-300 p-1.5 flex items-center justify-center rounded-lg hover:bg-red-50"
               >
                 {wishlist.length > 0 && (
-                  <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 bg-red-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 shadow-sm">
+                  <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 shadow-sm border-2 border-white">
                     {wishlist.length}
                   </span>
                 )}
-                <FaHeart size={26} />
+                <FaHeart size={22} />
               </Link>
 
               <Link
                 to="/shopCart"
-                className="relative text-gray-700 hover:text-gray-900 transition-colors duration-200 p-1 flex items-center justify-center"
                 aria-label="Shopping Cart"
+                className="relative text-gray-600 hover:text-black transition-colors duration-300 p-1.5 flex items-center justify-center rounded-lg hover:bg-gray-100"
               >
                 {cartItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 bg-red-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 shadow-sm">
+                  <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 bg-black text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 shadow-sm border-2 border-white">
                     {cartItems.length}
                   </span>
                 )}
-                <CiShoppingCart size={30} />
+                <CiShoppingCart size={26} strokeWidth={0.5} />
               </Link>
             </div>
+
             {token ? (
-              <div className="flex items-center border-l border-gray-300 pl-6 gap-4">
+              <div className="flex items-center border-l border-gray-200 pl-6 gap-4">
                 <Link
                   to={"/profile"}
-                  className="text-3xl hover:text-gray-600 transition"
+                  className="text-gray-600 hover:text-black hover:bg-gray-100 p-1.5 rounded-lg transition-colors"
                 >
-                  <CiUser />
+                  <CiUser size={26} strokeWidth={0.5} />
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-white bg-red-600 rounded-2xl font-medium hover:text-gray-200 transition px-6 py-2.5"
+                  className="text-gray-600 hover:text-red-600 text-sm font-semibold transition-colors px-2 py-1"
                 >
                   Logout
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-3 border-l border-gray-300 pl-6">
+              <div className="flex items-center gap-3 border-l border-gray-200 pl-6">
                 <Link
                   to={"/login"}
-                  className="text-black font-medium hover:text-gray-600 transition px-2 py-2"
+                  className="text-gray-600 font-semibold text-sm hover:text-black transition-colors px-3 py-2 rounded-xl hover:bg-gray-50"
                 >
                   Login
                 </Link>
                 <Link
                   to={"/register"}
-                  className="bg-black text-white px-6 py-2.5 rounded-lg font-medium hover:bg-gray-800 transition"
+                  className="bg-gray-950 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-600 transition-all active:scale-95 shadow-sm"
                 >
                   Register
                 </Link>
@@ -165,7 +146,7 @@ export default function Navbar() {
           </div>
 
           <button
-            className="lg:hidden text-3xl px-4"
+            className="lg:hidden text-2xl text-gray-800 p-2 hover:bg-gray-50 rounded-xl transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <HiMenuAlt3 />
@@ -173,107 +154,98 @@ export default function Navbar() {
         </div>
 
         {isMenuOpen && (
-          <div className="lg:hidden bg-white border-t px-4 py-4 space-y-4 shadow-lg absolute w-full left-0">
+          <div className="lg:hidden bg-white border-t border-gray-100 px-4 py-6 space-y-6 shadow-[0_20px_40px_rgba(0,0,0,0.05)] absolute w-full left-0 top-full">
             <nav className="flex flex-col gap-4">
-              <NavLink
-                to="/"
-                onClick={closeMenu}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-black font-medium"
-                    : "text-[#989898] hover:text-black"
-                }
-              >
-                Home
-              </NavLink>
-              <NavLink
-                to="/about"
-                onClick={closeMenu}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-black font-medium"
-                    : "text-[#989898] hover:text-black"
-                }
-              >
-                About
-              </NavLink>
-              <NavLink
-                to="/contact"
-                onClick={closeMenu}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-black font-medium"
-                    : "text-[#989898] hover:text-black"
-                }
-              >
-                Contact Us
-              </NavLink>
-              <NavLink
-                to="/blog"
-                onClick={closeMenu}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-black font-medium"
-                    : "text-[#989898] hover:text-black"
-                }
-              >
-                Blog
-              </NavLink>
+              {["Home", "About", "Contact", "Blog"].map((item) => (
+                <NavLink
+                  key={item}
+                  to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                  onClick={closeMenu}
+                  className={({ isActive }) =>
+                    `text-base font-semibold transition-colors px-2 py-1 rounded-lg ${
+                      isActive
+                        ? "text-black bg-gray-50"
+                        : "text-gray-500 hover:text-black hover:bg-gray-50/50"
+                    }`
+                  }
+                >
+                  {item === "Contact" ? "Contact Us" : item}
+                </NavLink>
+              ))}
             </nav>
 
-            <div className="flex gap-6 pt-4 border-t border-gray-200">
+            <div className="flex justify-around pt-5 border-t border-gray-100">
               <Link
                 to="/whislist"
-                aria-label="wishlist"
-                className="text-gray-700 hover:text-red-600 transition-colors duration-200 focus:outline-none"
+                onClick={closeMenu}
+                className="relative text-gray-600 hover:text-red-500 transition-colors p-2 rounded-xl hover:bg-red-50 flex flex-col items-center gap-1"
               >
-                <FaHeart size={26} />
+                <div className="relative">
+                  <FaHeart size={24} />
+                  {wishlist.length > 0 && (
+                    <span className="absolute -top-1.5 -right-2 min-w-4.5 h-4.5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 border-2 border-white">
+                      {wishlist.length}
+                    </span>
+                  )}
+                </div>
+                <span className="text-[10px] font-semibold">Wishlist</span>
               </Link>
+
               <Link
                 to="/shopCart"
                 onClick={closeMenu}
-                className="text-2xl hover:text-gray-600 transition"
+                className="relative text-gray-600 hover:text-black transition-colors p-2 rounded-xl hover:bg-gray-50 flex flex-col items-center gap-1"
               >
-                <CiShoppingCart />
+                <div className="relative">
+                  <CiShoppingCart size={28} strokeWidth={0.5} />
+                  {cartItems.length > 0 && (
+                    <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 bg-black text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 border-2 border-white">
+                      {cartItems.length}
+                    </span>
+                  )}
+                </div>
+                <span className="text-[10px] font-semibold">Cart</span>
               </Link>
+
               {token && (
                 <Link
                   to="/profile"
                   onClick={closeMenu}
-                  className="text-2xl hover:text-gray-600 transition"
+                  className="text-gray-600 hover:text-black transition-colors p-2 rounded-xl hover:bg-gray-50 flex flex-col items-center gap-1"
                 >
-                  <CiUser />
+                  <CiUser size={28} strokeWidth={0.5} />
+                  <span className="text-[10px] font-semibold">Profile</span>
                 </Link>
               )}
             </div>
 
-            {token ? (
-              <div className="flex flex-col gap-3 pt-4 border-t border-gray-200">
+            <div className="flex flex-col gap-3 pt-5 border-t border-gray-100">
+              {token ? (
                 <button
                   onClick={handleLogout}
-                  className="w-full text-center bg-red-600 text-white py-2.5 rounded-lg font-medium hover:bg-red-700 transition"
+                  className="w-full text-center bg-gray-50 text-red-600 py-3 rounded-xl font-bold text-sm hover:bg-red-50 transition-colors"
                 >
                   Logout
                 </button>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-3 pt-4 border-t border-gray-200">
-                <Link
-                  to={"/login"}
-                  onClick={closeMenu}
-                  className="w-full text-center border border-black text-black py-2.5 rounded-lg font-medium hover:bg-gray-50 transition"
-                >
-                  Login
-                </Link>
-                <Link
-                  to={"/register"}
-                  onClick={closeMenu}
-                  className="w-full text-center bg-black text-white py-2.5 rounded-lg font-medium hover:bg-gray-800 transition"
-                >
-                  Register
-                </Link>
-              </div>
-            )}
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  <Link
+                    to={"/login"}
+                    onClick={closeMenu}
+                    className="w-full text-center border border-gray-200 text-gray-800 py-3 rounded-xl font-bold text-sm hover:bg-gray-50 transition-colors"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to={"/register"}
+                    onClick={closeMenu}
+                    className="w-full text-center bg-gray-950 text-white py-3 rounded-xl font-bold text-sm hover:bg-blue-600 transition-colors shadow-sm"
+                  >
+                    Register
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </header>

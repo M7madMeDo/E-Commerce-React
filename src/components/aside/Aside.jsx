@@ -5,6 +5,7 @@ import { IoMdArrowDown, IoMdArrowUp } from "react-icons/io";
 export default function Aside({ onApply }) {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [isMenuOpen, setisMenuOpen] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
   const handleCheck = (cat) => {
     if (selectedCategories.includes(cat)) {
       setSelectedCategories(selectedCategories.filter((item) => item !== cat));
@@ -14,8 +15,8 @@ export default function Aside({ onApply }) {
   };
   const CategoriesData = async () => {
     const res = await fetch("https://dummyjson.com/products/category-list");
-    const data = await res.json();
-    return data;
+    if (!res.ok) throw new Error("Network response was not ok");
+    return res.json();
   };
   const { data: categorys = [], isLoading } = useQuery({
     queryKey: ["categorys"],
@@ -24,54 +25,67 @@ export default function Aside({ onApply }) {
   useEffect(() => {
     setisMenuOpen(false);
   }, []);
-
+  const filteredCat = categorys.filter((cat) =>
+    cat.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
   return (
-    <aside className=" w-full md:w-65 shrink-0">
+    <aside className="w-full md:w-64 shrink-0 bg-white p-5 rounded-2xl border border-gray-100 shadow-sm h-fit">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Categories</h2>
-        <span
-          className="cursor-pointer md:hidden"
+        <h2 className="text-lg font-bold text-gray-900">Categories</h2>
+        <button
           onClick={() => setisMenuOpen(!isMenuOpen)}
+          className="md:hidden text-xl p-1 hover:bg-gray-50 rounded-xl transition-colors border-none bg-transparent flex items-center justify-center"
         >
           {isMenuOpen ? <IoMdArrowUp /> : <IoMdArrowDown />}
-        </span>
+        </button>
       </div>
 
-      <div className={isMenuOpen ? "block" : "hidden md:block   "}>
-        <div className="flex items-center justify-center  bg-[#F5F5F5] rounded-lg p-2 gap-2 mb-4">
-          <CiSearch className="text-2xl text-[#989898]" />
+      <div className={isMenuOpen ? "block" : "hidden md:block"}>
+        <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl p-2.5 gap-2 mb-4 focus-within:border-black transition-colors">
+          <CiSearch className="text-xl text-gray-400 shrink-0" />
           <input
             type="text"
-            placeholder="Search"
-            className="bg-transparent outline-none text-sm w-full text-black"
+            placeholder="Search categories..."
+            onChange={(e) => setSearchQuery(e.target.value)}
+            value={searchQuery}
+            className="bg-transparent outline-none text-sm w-full text-black placeholder-gray-400"
           />
         </div>
+
         {isLoading ? (
-          <div className="flex justify-center items-center h-64">
-            <span className="loader border-4 border-gray-200 border-t-black rounded-full w-12 h-12 animate-spin"></span>
+          <div className="flex justify-center items-center h-48">
+            <span className="border-4 border-gray-200 border-t-black rounded-full w-8 h-8 animate-spin"></span>
           </div>
         ) : (
-          <ul className="space-y-3 mb-8">
-            {categorys.map((cat, i) => (
-              <li key={i} className="flex items-center gap-2">
-                <input
-                  onChange={() => handleCheck(cat)}
-                  type="checkbox"
-                  id={cat}
-                  checked={selectedCategories.includes(cat)}
-                  className="w-4 h-4 accent-black"
-                />
-                <label htmlFor={cat} className="capitalize text-sm">
-                  {cat}
-                </label>
-              </li>
-            ))}
-          </ul>
+          <div className="max-h-64 overflow-y-auto pr-1 mb-6">
+            {filteredCat.length === 0 ? (
+              <p className="text-xs text-gray-400 text-center py-4">
+                No categories found
+              </p>
+            ) : (
+              <ul className="space-y-3">
+                {filteredCat.map((cat) => (
+                  <li key={cat} className="flex items-center gap-3 group">
+                    <input
+                      onChange={() => handleCheck(cat)}
+                      type="checkbox"
+                      id={cat}
+                      checked={selectedCategories.includes(cat)}
+                      className="w-4 h-4 accent-black rounded  shrink-0"
+                    />
+                    <label className="capitalize text-sm text-gray-600  group-hover:text-black transition-colors select-none w-full">
+                      {cat.replace("-", " ")}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         )}
 
         <button
           onClick={() => onApply(selectedCategories)}
-          className="w-full bg-black text-white py-3 rounded-lg font-medium cursor-pointer"
+          className="w-full bg-black hover:bg-gray-800 text-white py-3 rounded-xl font-semibold text-sm transition-all active:scale-[0.98] shadow-sm"
         >
           Apply
         </button>

@@ -12,10 +12,10 @@ import {
 } from "react-icons/fa";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+
 export default function Products({ activeCategories }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(6);
-  const [token, setToken] = useState("");
   const { addToCart } = useCart();
 
   const getProductsdata = async () => {
@@ -37,6 +37,7 @@ export default function Products({ activeCategories }) {
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["products", activeCategories],
     queryFn: getProductsdata,
+    staleTime: 1000 * 60 * 5,
   });
 
   useEffect(() => {
@@ -47,15 +48,9 @@ export default function Products({ activeCategories }) {
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = products.slice(firstPostIndex, lastPostIndex);
 
-  useEffect(() => {
-    const savedToken = Cookies.get("Token");
-    if (savedToken) {
-      setToken(savedToken);
-    }
-  }, []);
-
   function handleAddtoCart(pro) {
-    if (!token) {
+    const savedToken = Cookies.get("Token");
+    if (!savedToken) {
       Swal.fire({
         toast: true,
         position: "top-end",
@@ -85,67 +80,77 @@ export default function Products({ activeCategories }) {
   };
 
   return (
-    <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-8">
-      <div className="mb-6 flex items-center justify-between">
-        <span className="text-gray-600 text-lg">
+    <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-4">
+      <div className="mb-8 flex items-center justify-between border-b border-gray-100 pb-4">
+        <span className="text-sm font-medium text-gray-500 tracking-wide">
           Available Products:
-          <span className="font-bold text-black ml-1">{products.length}</span>
+          <span className="font-bold text-black ml-1.5 bg-gray-100 px-2.5 py-1 rounded-md text-xs">
+            {products.length} Items
+          </span>
         </span>
       </div>
 
       {isLoading ? (
-        <div className="flex justify-center items-center h-64">
-          <span className="loader border-4 border-gray-200 border-t-black rounded-full w-12 h-12 animate-spin"></span>
+        <div className="flex justify-center items-center h-96">
+          <span className="border-4 border-gray-200 border-t-black rounded-full w-10 h-10 animate-spin"></span>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-10">
           {currentPosts.map((pro) => (
             <div
               key={pro.id}
-              className="group flex flex-col transition-all duration-300 border border-transparent hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:border-gray-100 rounded-2xl pb-4"
+              className="group flex flex-col justify-between bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-transparent hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 pb-5"
             >
-              <div className="relative aspect-square w-full bg-[#f9f9f9] rounded-2xl flex justify-center items-center p-6 mb-4 overflow-hidden">
+              <div className="relative aspect-square w-full bg-gray-50/60 rounded-2xl flex justify-center items-center p-8 overflow-hidden group-hover:bg-gray-100/40 transition-colors duration-300">
                 <img
+                  loading="lazy"
                   src={pro.thumbnail}
                   alt={pro.title}
-                  className="max-h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-in-out mix-blend-multiply"
+                  className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out mix-blend-multiply"
                 />
 
-                <div className="absolute top-4 right-4 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-gray-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider border border-gray-100 shadow-sm">
+                  {pro.category}
+                </span>
+
+                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <Link
                     to={`/singleProduct/${pro.id}`}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-[0_2px_10px_rgb(0,0,0,0.1)] text-gray-500 hover:text-black hover:scale-105 transition-all"
+                    className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-gray-700 hover:text-white hover:bg-black shadow-lg scale-90 group-hover:scale-100 transition-all duration-300"
                   >
                     <FaRegEye size={18} />
                   </Link>
                 </div>
               </div>
 
-              <div className="flex flex-col flex-1 px-2">
-                <div className="flex items-center gap-1.5 mb-2">
-                  <div className="flex text-[#FFC107] text-[14px]">
+              <div className="flex flex-col flex-1 px-5 pt-3">
+                <div className="flex items-center gap-1.5 mb-2 bg-amber-50/50 w-fit px-2 py-0.5 rounded-md border border-amber-100/50">
+                  <div className="flex text-[#FFC107] text-[11px] gap-0.5">
                     {renderStars(pro.rating || 0)}
                   </div>
-                  <span className="text-sm text-gray-500 font-medium">
+                  <span className="text-[11px] text-amber-700 font-bold">
                     {pro.rating.toFixed(1)}
                   </span>
                 </div>
 
-                <h3 className="text-base font-medium text-gray-900 line-clamp-2 leading-snug mb-5 min-h-11">
-                  {pro.title}
+                <h3 className="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-5 min-h-11 hover:text-blue-600 transition-colors">
+                  <Link to={`/singleProduct/${pro.id}`}>{pro.title}</Link>
                 </h3>
 
-                <div className="mt-auto flex items-center justify-between">
-                  <span className="text-xl font-bold text-gray-900">
+                <div className="mt-auto flex items-center justify-between pt-3.5 border-t border-gray-50">
+                  <span className="text-xl font-extrabold text-gray-900 tracking-tight">
                     ${pro.price}
                   </span>
 
                   <button
                     onClick={() => handleAddtoCart(pro)}
-                    className="flex items-center justify-center gap-2 bg-black text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-gray-800 active:scale-95 transition-all"
+                    className="flex items-center justify-center gap-2 bg-gray-950 hover:bg-blue-600 text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow-md active:scale-95 transition-all cursor-pointer group/btn"
                   >
-                    <FaShoppingCart size={14} />
-                    <span>Add</span>
+                    <FaShoppingCart
+                      size={13}
+                      className="group-hover/btn:translate-x-0.5 transition-transform"
+                    />
+                    <span>Add to Cart</span>
                   </button>
                 </div>
               </div>
@@ -155,7 +160,7 @@ export default function Products({ activeCategories }) {
       )}
 
       {products.length > postsPerPage && (
-        <div className="mt-16 flex justify-center border-t border-gray-300 pt-8">
+        <div className="mt-20 flex justify-center border-t border-gray-100 pt-10">
           <Pagination
             totalPosts={products.length}
             postsPerPage={postsPerPage}

@@ -5,11 +5,10 @@ import { useCart } from "../../hooks/cartSettings/CartSettings";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 
 const singleProducts = async (id) => {
   const res = await fetch(`https://dummyjson.com/products/${id}`);
-  if (!res.ok) throw new Error("Failed to fetch product");
+  if (!res.ok) throw new Error("Failed to get product");
   return res.json();
 };
 
@@ -17,7 +16,7 @@ const relatedProducts = async (category) => {
   const res = await fetch(
     `https://dummyjson.com/products/category/${category}`,
   );
-  if (!res.ok) throw new Error("Failed to fetch related products");
+  if (!res.ok) throw new Error("Failed to get related products");
   return res.json();
 };
 
@@ -68,11 +67,12 @@ export default function ShowSingleProduct() {
     }
     addToCart(pro);
   }
+
   return (
-    <section className="container mx-auto px-4 py-6 md:p-10 bg-white">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-white min-h-screen">
       {isLoadingProduct ? (
-        <div className="flex justify-center items-center h-64 z-10">
-          <span className="loader border-4 border-gray-200 border-t-black rounded-full w-12 h-12 animate-spin"></span>
+        <div className="flex justify-center items-center h-[60vh] z-10">
+          <span className="border-4 border-gray-200 border-t-black rounded-full w-12 h-12 animate-spin"></span>
         </div>
       ) : (
         singleProduct && (
@@ -94,51 +94,63 @@ export default function ShowSingleProduct() {
         )
       )}
 
-      <div className="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-[#F2F2F2]">
-        <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
-          Related Products
-        </h2>
+      <div className="mt-20 pt-12 border-t border-gray-100">
+        <div className="flex items-center justify-between mb-10">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
+            Related Products
+          </h2>
+        </div>
 
         {isLoadingRelated ? (
-          <div className="flex justify-center items-center h-32">
-            <span className="loader border-4 border-gray-200 border-t-black rounded-full w-8 h-8 animate-spin"></span>
+          <div className="flex justify-center items-center h-48">
+            <span className="border-4 border-gray-200 border-t-black rounded-full w-10 h-10 animate-spin"></span>
           </div>
         ) : (
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 mt-10 gap-3 ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10">
             {relatedProduct.map((pro) => (
               <div
                 key={pro.id}
-                className="bg-white border border-gray-100 rounded-2xl p-4 flex flex-col shadow-sm hover:shadow-xl transition-shadow duration-300 group"
+                className="group flex flex-col justify-between bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-transparent hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 pb-5"
               >
-                <div className="w-full h-56 flex justify-center items-center bg-[#F8F9FA] rounded-xl p-4 mb-4 overflow-hidden">
+                <div className="relative aspect-square w-full bg-gray-50/60 rounded-2xl flex justify-center items-center p-6 overflow-hidden group-hover:bg-gray-100/40 transition-colors duration-300">
                   <img
+                    loading="lazy"
                     src={pro.thumbnail}
                     alt={pro.title}
-                    className="max-h-full object-contain group-hover:scale-110 transition-transform duration-500 ease-in-out"
+                    className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out mix-blend-multiply"
                   />
-                </div>
 
-                <div className="flex flex-col flex-1 text-center">
-                  <h3 className="font-semibold text-gray-800 leading-snug mb-2 line-clamp-2 min-h-12">
-                    {pro.title}
-                  </h3>
-                  <p className="text-xl font-bold text-black font-primary mb-4">
-                    $ {pro.price}
-                  </p>
-                  <div className="flex justify-center items-center gap-1.5">
-                    <button
-                      onClick={() => handleAddtoCart(pro)}
-                      className="w-full bg-black hover:bg-gray-800 text-white font-medium py-3 rounded-xl mt-auto transition-colors duration-200 cursor-pointer active:scale-95"
-                    >
-                      Add To Cart
-                    </button>
+                  <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <Link
                       onClick={() => scrollToTop()}
                       to={`/singleProduct/${pro.id}`}
-                      className="p-2 bg-gray-950 text-amber-50 text-2xl rounded-4xl hover:bg-gray-700"
+                      className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-gray-700 hover:text-white hover:bg-black shadow-lg scale-90 group-hover:scale-100 transition-all duration-300"
                     >
-                      <FaEye />
+                      <FaEye size={18} />
                     </Link>
+                  </div>
+                </div>
+
+                <div className="flex flex-col flex-1 px-5 pt-4 text-left">
+                  <h3 className="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-4 min-h-11 hover:text-blue-600 transition-colors">
+                    <Link
+                      onClick={() => scrollToTop()}
+                      to={`/singleProduct/${pro.id}`}
+                    >
+                      {pro.title}
+                    </Link>
+                  </h3>
+
+                  <div className="mt-auto flex items-center justify-between pt-4 border-t border-gray-50">
+                    <span className="text-xl font-extrabold text-gray-900 tracking-tight">
+                      ${pro.price}
+                    </span>
+                    <button
+                      onClick={() => handleAddtoCart(pro)}
+                      className="bg-gray-950 hover:bg-blue-600 text-white px-5 py-2.5 rounded-xl text-xs font-semibold shadow-sm active:scale-95 transition-all cursor-pointer"
+                    >
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
               </div>

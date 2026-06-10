@@ -10,6 +10,7 @@ import ShopingCart from "./pages/shopingCart/ShopingCart";
 import AuthRoute from "./protectedRoute/authRoute/AuthRoute";
 import GuestRoute from "./protectedRoute/guestRoute/GuestRoute";
 import Whistlist from "./pages/wishlist/Whistlist";
+import About from "./pages/about/About";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "/singleProduct/:id",
         element: <ShowSingleProduct />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
     ],
   },
