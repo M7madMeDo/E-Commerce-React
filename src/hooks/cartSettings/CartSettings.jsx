@@ -9,9 +9,18 @@ export default function CartSettings({ children }) {
     return savedCart;
   });
 
+  const [wishlist, setwishlist] = useState(() => {
+    const savedWish = JSON.parse(localStorage.getItem("wishlist"));
+    return savedWish || [];
+  });
+
   useEffect(() => {
     localStorage.setItem("myCart", JSON.stringify(cartItems));
   }, [cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
 
   const addToCart = async (product, userId = 1) => {
     await fetch("https://dummyjson.com/carts/add", {
@@ -37,6 +46,7 @@ export default function CartSettings({ children }) {
     });
 
     Swal.fire({
+      toast: true,
       title: "Success",
       text: "Product added!",
       icon: "success",
@@ -61,9 +71,37 @@ export default function CartSettings({ children }) {
   const clearCart = () => {
     setCartItems([]);
   };
+  const toggleWishlist = (product) => {
+    setwishlist((prev) => {
+      const isExist = prev.some((item) => item.id === product.id);
+      if (isExist) {
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Removed from wishlist",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return prev.filter((item) => item.id !== product.id);
+      } else {
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Added to wishlist",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return [...prev, product];
+      }
+    });
+  };
   return (
     <CartContext.Provider
       value={{
+        toggleWishlist,
+        wishlist,
         cartItems,
         addToCart,
         deleteFromTheCart,

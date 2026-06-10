@@ -11,7 +11,7 @@ export default function Navbar() {
   const [token, setToken] = useState("");
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
-  const { cartItems } = useCart();
+  const { cartItems, wishlist } = useCart();
   useEffect(() => {
     const savedToken = Cookies.get("Token");
     if (savedToken) {
@@ -105,12 +105,18 @@ export default function Navbar() {
           </nav>
           <div className="hidden lg:flex items-center gap-6">
             <div className="flex items-center gap-5">
-              <button
+              <Link
+                to="/whislist"
                 aria-label="wishlist"
-                className="text-gray-700 hover:text-red-600 transition-colors duration-200 focus:outline-none"
+                className=" relative text-gray-700 hover:text-red-600 transition-colors duration-200 focus:outline-none"
               >
+                {wishlist.length > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 bg-red-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 shadow-sm">
+                    {wishlist.length}
+                  </span>
+                )}
                 <FaHeart size={26} />
-              </button>
+              </Link>
 
               <Link
                 to="/shopCart"
@@ -135,7 +141,7 @@ export default function Navbar() {
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-white bg-black rounded-2xl font-medium hover:text-gray-200 transition px-6 py-2.5 cursor-pointer"
+                  className="text-white bg-red-600 rounded-2xl font-medium hover:text-gray-200 transition px-6 py-2.5"
                 >
                   Logout
                 </button>
@@ -159,7 +165,7 @@ export default function Navbar() {
           </div>
 
           <button
-            className="lg:hidden text-3xl px-4 cursor-pointer"
+            className="lg:hidden text-3xl px-4"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <HiMenuAlt3 />
@@ -216,9 +222,13 @@ export default function Navbar() {
             </nav>
 
             <div className="flex gap-6 pt-4 border-t border-gray-200">
-              <button className="text-2xl hover:text-red-700 transition">
-                <FaHeart />
-              </button>
+              <Link
+                to="/whislist"
+                aria-label="wishlist"
+                className="text-gray-700 hover:text-red-600 transition-colors duration-200 focus:outline-none"
+              >
+                <FaHeart size={26} />
+              </Link>
               <Link
                 to="/shopCart"
                 onClick={closeMenu}
@@ -241,7 +251,7 @@ export default function Navbar() {
               <div className="flex flex-col gap-3 pt-4 border-t border-gray-200">
                 <button
                   onClick={handleLogout}
-                  className="w-full text-center bg-red-600 text-white py-2.5 rounded-lg font-medium hover:bg-red-700 transition cursor-pointer"
+                  className="w-full text-center bg-red-600 text-white py-2.5 rounded-lg font-medium hover:bg-red-700 transition"
                 >
                   Logout
                 </button>

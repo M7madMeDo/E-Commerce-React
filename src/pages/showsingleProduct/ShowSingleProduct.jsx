@@ -5,6 +5,7 @@ import { useCart } from "../../hooks/cartSettings/CartSettings";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 const singleProducts = async (id) => {
   const res = await fetch(`https://dummyjson.com/products/${id}`);
@@ -22,7 +23,7 @@ const relatedProducts = async (category) => {
 
 export default function ShowSingleProduct() {
   const { id } = useParams();
-  const { addToCart } = useCart();
+  const { addToCart, wishlist, toggleWishlist } = useCart();
 
   const { data: singleProduct, isLoading: isLoadingProduct } = useQuery({
     queryKey: ["product", id],
@@ -67,7 +68,6 @@ export default function ShowSingleProduct() {
     }
     addToCart(pro);
   }
-
   return (
     <section className="container mx-auto px-4 py-6 md:p-10 bg-white">
       {isLoadingProduct ? (
@@ -88,6 +88,8 @@ export default function ShowSingleProduct() {
             shippingInformation={singleProduct.shippingInformation}
             description={singleProduct.description}
             addToCart={handleAddtoCart}
+            toggleWishlist={toggleWishlist}
+            isWishlisted={wishlist.some((item) => item.id === singleProduct.id)}
           />
         )
       )}

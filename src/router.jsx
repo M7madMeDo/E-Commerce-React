@@ -9,6 +9,7 @@ import Error from "./pages/error/Error";
 import ShopingCart from "./pages/shopingCart/ShopingCart";
 import AuthRoute from "./protectedRoute/authRoute/AuthRoute";
 import GuestRoute from "./protectedRoute/guestRoute/GuestRoute";
+import Whistlist from "./pages/wishlist/Whistlist";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
           {
             path: "/shopCart",
             element: <ShopingCart />,
+          },
+          {
+            path: "/whislist",
+            element: <Whistlist />,
           },
         ],
       },

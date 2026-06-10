@@ -1,9 +1,10 @@
 import { FiTruck } from "react-icons/fi";
 import { BiStore } from "react-icons/bi";
 import { BsShieldCheck } from "react-icons/bs";
+
 export default function SingleProductCard(props) {
   return (
-    <div
+    <section
       key={props.id}
       className="grid lg:grid-cols-2 sm:grid-cols-1 gap-6 md:gap-10 items-start"
     >
@@ -22,11 +23,9 @@ export default function SingleProductCard(props) {
 
         <div className="flex items-baseline gap-2">
           <p className="text-3xl md:text-4xl font-bold">${props.finalprice}</p>
-          {/* main price */}
           <p className="text-lg md:text-xl text-[#9A9A9A] line-through">
             ${props.price}
           </p>
-          {/* sale price */}
         </div>
 
         <p className="text-[#7C7C7C] leading-relaxed text-sm sm:text-base">
@@ -34,9 +33,17 @@ export default function SingleProductCard(props) {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-2 md:pt-4 w-full">
-          <button className="w-full sm:w-1/2 border border-black bg-white text-black px-6 py-3 font-medium hover:bg-black hover:text-white transition rounded-md">
-            Add To Wishlist
+          <button
+            onClick={() => props.toggleWishlist(props)}
+            className={`w-full sm:w-1/2 border px-6 py-3 font-medium transition rounded-md ${
+              props.isWishlisted
+                ? "bg-red-500 text-white border-red-500 hover:bg-red-600"
+                : "border-black bg-white text-black hover:bg-black hover:text-white"
+            }`}
+          >
+            {props.isWishlisted ? "Remove From Wishlist" : "Add To Wishlist"}
           </button>
+
           <button
             onClick={() => props.addToCart(props)}
             className="w-full sm:w-1/2 bg-black text-white px-6 py-3 font-medium hover:bg-white hover:text-black border hover:border-black transition rounded-md"
@@ -51,7 +58,7 @@ export default function SingleProductCard(props) {
               <FiTruck className="text-xl md:text-2xl" />
             </div>
             <div className="flex flex-col">
-              <p className="font- medium text-[#7C7C7C] text-sm md:text-base">
+              <p className="font-medium text-[#7C7C7C] text-sm md:text-base">
                 Free Delivery
               </p>
               <p className="text-xs md:text-base font-semibold text-black">
@@ -89,6 +96,6 @@ export default function SingleProductCard(props) {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
