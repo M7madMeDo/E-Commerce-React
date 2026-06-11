@@ -38,38 +38,47 @@ export default function Login() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-white p-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md border border-gray-200 text-black">
-        <h2 className="text-3xl font-bold text-center mb-8 tracking-tight">
-          Login
-        </h2>
+    <section className="min-h-screen flex items-center justify-center bg-white p-4 selection:bg-black selection:text-white">
+      <div className="w-full max-w-md bg-white p-8 sm:p-10 rounded-4xl shadow-[0_8px_40px_rgb(0,0,0,0.04)] border border-gray-100 text-black">
+        <div className="text-center mb-10">
+          <h1 className="text-2xl font-black uppercase tracking-widest text-gray-900 mb-2">
+            AETHER
+          </h1>
+          <h2 className="text-sm font-bold tracking-wide text-gray-400">
+            Welcome back to your account
+          </h2>
+        </div>
 
         {isError && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded text-center text-sm">
+          <div className="mb-6 p-4 bg-red-50 text-red-600 border border-red-100 rounded-xl text-center text-sm font-semibold">
             {error.message || "Something went wrong!"}
           </div>
         )}
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium mb-2">Username</label>
+            <label className="block text-[11px] font-extrabold text-gray-400 uppercase tracking-widest mb-2">
+              Username
+            </label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-1 focus:ring-black transition-shadow"
-              placeholder="Enter your Username"
+              className="w-full px-5 py-3.5 bg-gray-50/80 border border-gray-100 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white transition-all placeholder:text-gray-300"
+              placeholder="Enter your username"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Password</label>
+            <label className="block text-[11px] font-extrabold text-gray-400 uppercase tracking-widest mb-2">
+              Password
+            </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-1 focus:ring-black transition-shadow"
+              className="w-full px-5 py-3.5 bg-gray-50/80 border border-gray-100 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-900 focus:bg-white transition-all placeholder:text-gray-300"
               placeholder="Enter your password"
               required
             />
@@ -78,28 +87,30 @@ export default function Login() {
           <button
             type="submit"
             disabled={isPending}
-            className={`w-full py-3 px-4 rounded border border-black font-medium transition-colors duration-200 mt-2 flex justify-center items-center ${
+            className={`w-full py-4 px-4 rounded-xl font-bold text-sm transition-all duration-300 mt-2 flex justify-center items-center ${
               isPending
-                ? "bg-gray-400 text-white cursor-not-allowed border-gray-400"
-                : "bg-black text-white hover:bg-white hover:text-black"
+                ? "bg-gray-50 text-gray-400 cursor-not-allowed border border-gray-100"
+                : "bg-gray-950 text-white hover:bg-black hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] active:scale-[0.98]"
             }`}
           >
             {isPending ? (
-              <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span className="w-5 h-5 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></span>
             ) : (
-              "Login"
+              "Sign In"
             )}
           </button>
         </form>
 
         <div className="mt-8 text-center">
-          <Link
-            to="/register"
-            className="text-sm font-medium underline hover:no-underline transition-all"
-          >
-            Don't have an account?{" "}
-            <span className="text-red-600 underline">Register</span>
-          </Link>
+          <span className="text-sm text-gray-500 font-medium">
+            Don't have an account?
+            <Link
+              to="/register"
+              className="text-gray-950 font-extrabold hover:text-gray-500 transition-colors"
+            >
+              Register
+            </Link>
+          </span>
         </div>
       </div>
     </section>

@@ -3,13 +3,8 @@ import { useCart } from "../../hooks/cartSettings/CartSettings";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import Pagination from "../pagination/Pagination";
-import {
-  FaRegEye,
-  FaStar,
-  FaStarHalfAlt,
-  FaRegStar,
-  FaShoppingCart,
-} from "react-icons/fa";
+import { FiEye, FiShoppingCart } from "react-icons/fi";
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 
@@ -69,11 +64,11 @@ export default function Products({ activeCategories }) {
     return [1, 2, 3, 4, 5].map((star) => (
       <span key={star}>
         {rating >= star ? (
-          <FaStar />
+          <FaStar size={13} />
         ) : rating >= star - 0.5 ? (
-          <FaStarHalfAlt />
+          <FaStarHalfAlt size={13} />
         ) : (
-          <FaRegStar />
+          <FaRegStar size={13} className="text-gray-300" />
         )}
       </span>
     ));
@@ -82,7 +77,7 @@ export default function Products({ activeCategories }) {
   return (
     <main
       className="flex-1 w-full max-w-7xl mx-auto px-4 py-4 selection:bg-black selection:text-white"
-      id="proudcts"
+      id="products"
     >
       <div className="mb-8 flex items-center justify-between border-b border-gray-100 pb-4">
         <span className="text-sm font-medium text-gray-500 tracking-wide">
@@ -122,9 +117,10 @@ export default function Products({ activeCategories }) {
                 <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <Link
                     to={`/singleProduct/${pro.id}`}
-                    className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-gray-700 hover:text-white hover:bg-black shadow-md scale-90 group-hover:scale-100 transition-all duration-300"
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-gray-700 hover:text-white hover:bg-black shadow-sm border border-gray-100 scale-90 group-hover:scale-100 transition-all duration-300"
                   >
-                    <FaRegEye size={18} />
+                    <FiEye size={18} />
                   </Link>
                 </div>
               </div>
@@ -144,17 +140,28 @@ export default function Products({ activeCategories }) {
                 </h3>
 
                 <div className="mt-auto flex items-center justify-between pt-3.5 border-t border-gray-50">
-                  <span className="text-xl font-extrabold text-gray-900 tracking-tight">
-                    ${pro.price}
-                  </span>
+                  <div className="flex flex-col">
+                    {pro.discountPercentage > 0 && (
+                      <span className="text-[11px] font-bold text-gray-400 line-through decoration-gray-300 mb-0.5">
+                        $
+                        {(
+                          pro.price /
+                          (1 - pro.discountPercentage / 100)
+                        ).toFixed(2)}
+                      </span>
+                    )}
+                    <span className="text-xl font-extrabold text-gray-900 tracking-tight leading-none">
+                      ${pro.price.toFixed(2)}
+                    </span>
+                  </div>
 
                   <button
                     onClick={() => handleAddtoCart(pro)}
                     className="flex items-center justify-center gap-2 bg-gray-950 hover:bg-black text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] active:scale-95 transition-all cursor-pointer group/btn"
                   >
-                    <FaShoppingCart
-                      size={13}
-                      className="group-hover/btn:translate-x-0.5 transition-transform"
+                    <FiShoppingCart
+                      size={14}
+                      className="group-hover/btn:translate-x-0.5 transition-transform duration-200"
                     />
                     <span>Add to Cart</span>
                   </button>

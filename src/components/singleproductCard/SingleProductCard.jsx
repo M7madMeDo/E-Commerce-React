@@ -1,13 +1,10 @@
-import { FiTruck } from "react-icons/fi";
-import { BiStore } from "react-icons/bi";
-import { BsShieldCheck } from "react-icons/bs";
+import { FiTruck, FiPackage, FiShield } from "react-icons/fi";
 
 export default function SingleProductCard(props) {
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start max-w-7xl mx-auto px-4 py-6">
       <div className="bg-gray-50/80 border border-gray-100 p-6 md:p-12 flex items-center justify-center rounded-2xl w-full aspect-square max-h-125 shadow-sm">
         <img
-          loading="lazy"
           src={props.img}
           alt={props.title}
           loading="eager"
@@ -24,9 +21,11 @@ export default function SingleProductCard(props) {
           <p className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
             ${props.finalprice}
           </p>
-          <p className="text-base md:text-lg text-gray-400 line-through font-medium">
-            ${props.price}
-          </p>
+          {props.price && props.price !== "0.00" && (
+            <p className="text-base md:text-lg text-gray-400 line-through font-medium">
+              ${props.price}
+            </p>
+          )}
         </div>
 
         <p className="text-gray-600 leading-relaxed text-sm sm:text-base max-w-xl">
@@ -36,7 +35,7 @@ export default function SingleProductCard(props) {
         <div className="flex flex-col sm:flex-row gap-3.5 pt-4 w-full">
           <button
             onClick={() => props.addToCart(props)}
-            className="w-full sm:w-1/2 bg-gray-950 hover:bg-blue-600 text-white px-6 py-3.5 rounded-xl text-sm font-semibold shadow-sm hover:shadow-md active:scale-[0.99] transition-all cursor-pointer order-1 sm:order-2"
+            className="w-full sm:w-1/2 bg-gray-950 hover:bg-black text-white px-6 py-3.5 rounded-xl text-sm font-semibold shadow-sm hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] active:scale-[0.99] transition-all cursor-pointer order-1 sm:order-2"
           >
             Add To Cart
           </button>
@@ -70,7 +69,7 @@ export default function SingleProductCard(props) {
 
           <div className="flex items-center gap-3 bg-gray-50/60 border border-gray-100 p-3.5 rounded-xl">
             <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-100 shrink-0 text-gray-800 shadow-sm">
-              <BiStore className="text-lg" />
+              <FiPackage className="text-lg" />
             </div>
             <div className="flex flex-col min-w-0">
               <span className="text-xs font-medium text-gray-400 truncate">
@@ -84,7 +83,7 @@ export default function SingleProductCard(props) {
 
           <div className="flex items-center gap-3 bg-gray-50/60 border border-gray-100 p-3.5 rounded-xl">
             <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-100 shrink-0 text-gray-800 shadow-sm">
-              <BsShieldCheck className="text-lg" />
+              <FiShield className="text-lg" />
             </div>
             <div className="flex flex-col min-w-0">
               <span className="text-xs font-medium text-gray-400">
