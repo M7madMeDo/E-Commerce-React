@@ -11,6 +11,8 @@ import AuthRoute from "./protectedRoute/authRoute/AuthRoute";
 import GuestRoute from "./protectedRoute/guestRoute/GuestRoute";
 import Whistlist from "./pages/wishlist/Whistlist";
 import About from "./pages/about/About";
+import Contactus from "./pages/contact Us/Contactus";
+import Blog from "./pages/blog/Blog";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contactus />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
       },
     ],
   },

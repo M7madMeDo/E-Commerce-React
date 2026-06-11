@@ -80,7 +80,10 @@ export default function Products({ activeCategories }) {
   };
 
   return (
-    <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-4">
+    <main
+      className="flex-1 w-full max-w-7xl mx-auto px-4 py-4 selection:bg-black selection:text-white"
+      id="proudcts"
+    >
       <div className="mb-8 flex items-center justify-between border-b border-gray-100 pb-4">
         <span className="text-sm font-medium text-gray-500 tracking-wide">
           Available Products:
@@ -92,18 +95,19 @@ export default function Products({ activeCategories }) {
 
       {isLoading ? (
         <div className="flex justify-center items-center h-96">
-          <span className="border-4 border-gray-200 border-t-black rounded-full w-10 h-10 animate-spin"></span>
+          <span className="border-2 border-transparent border-t-black rounded-full w-8 h-8 animate-spin"></span>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-10">
           {currentPosts.map((pro) => (
             <div
               key={pro.id}
-              className="group flex flex-col justify-between bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-transparent hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 pb-5"
+              className="group flex flex-col justify-between bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-transparent hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all duration-300 pb-5"
             >
               <div className="relative aspect-square w-full bg-gray-50/60 rounded-2xl flex justify-center items-center p-8 overflow-hidden group-hover:bg-gray-100/40 transition-colors duration-300">
                 <img
                   loading="lazy"
+                  decoding="async"
                   src={pro.thumbnail}
                   alt={pro.title}
                   width="195"
@@ -118,7 +122,7 @@ export default function Products({ activeCategories }) {
                 <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <Link
                     to={`/singleProduct/${pro.id}`}
-                    className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-gray-700 hover:text-white hover:bg-black shadow-lg scale-90 group-hover:scale-100 transition-all duration-300"
+                    className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-gray-700 hover:text-white hover:bg-black shadow-md scale-90 group-hover:scale-100 transition-all duration-300"
                   >
                     <FaRegEye size={18} />
                   </Link>
@@ -135,7 +139,7 @@ export default function Products({ activeCategories }) {
                   </span>
                 </div>
 
-                <h3 className="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-5 min-h-11 hover:text-blue-600 transition-colors">
+                <h3 className="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-5 min-h-11 hover:text-gray-500 transition-colors">
                   <Link to={`/singleProduct/${pro.id}`}>{pro.title}</Link>
                 </h3>
 
@@ -146,7 +150,7 @@ export default function Products({ activeCategories }) {
 
                   <button
                     onClick={() => handleAddtoCart(pro)}
-                    className="flex items-center justify-center gap-2 bg-gray-950 hover:bg-blue-600 text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow-md active:scale-95 transition-all cursor-pointer group/btn"
+                    className="flex items-center justify-center gap-2 bg-gray-950 hover:bg-black text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] active:scale-95 transition-all cursor-pointer group/btn"
                   >
                     <FaShoppingCart
                       size={13}

@@ -5,7 +5,7 @@ import { IoMdArrowDown, IoMdArrowUp } from "react-icons/io";
 export default function Aside({ onApply }) {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [isMenuOpen, setisMenuOpen] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [serach, setSearch] = useState("");
   const handleCheck = (cat) => {
     if (selectedCategories.includes(cat)) {
       setSelectedCategories(selectedCategories.filter((item) => item !== cat));
@@ -26,7 +26,7 @@ export default function Aside({ onApply }) {
     setisMenuOpen(false);
   }, []);
   const filteredCat = categorys.filter((cat) =>
-    cat.toLowerCase().includes(searchQuery.toLowerCase()),
+    cat.toLowerCase().includes(serach.toLowerCase()),
   );
   return (
     <aside className="w-full md:w-64 shrink-0 bg-white p-5 rounded-2xl border border-gray-100 shadow-sm h-fit">
@@ -45,9 +45,9 @@ export default function Aside({ onApply }) {
           <CiSearch className="text-xl text-gray-400 shrink-0" />
           <input
             type="text"
-            placeholder="Search categories..."
-            onChange={(e) => setSearchQuery(e.target.value)}
-            value={searchQuery}
+            placeholder="Search categories"
+            onChange={(e) => setSearch(e.target.value)}
+            value={serach}
             className="bg-transparent outline-none text-sm w-full text-black placeholder-gray-400"
           />
         </div>
@@ -73,8 +73,8 @@ export default function Aside({ onApply }) {
                       checked={selectedCategories.includes(cat)}
                       className="w-4 h-4 accent-black rounded  shrink-0"
                     />
-                    <label className="capitalize text-sm text-gray-600  group-hover:text-black transition-colors select-none w-full">
-                      {cat.replace("-", " ")}
+                    <label className="capitalize text-sm text-gray-600 group-hover:text-black transition-colors select-none w-full">
+                      {cat}
                     </label>
                   </li>
                 ))}

@@ -6,11 +6,13 @@ export default function Pagination({
   setCurrentPage,
   currentPage,
 }) {
-  let pages = [];
   const totalPages = Math.ceil(totalPosts / postsPerPage);
+  let pages = [];
+
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
   }
+
   const handleNext = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -22,40 +24,39 @@ export default function Pagination({
       setCurrentPage(currentPage - 1);
     }
   };
+
   return (
-    <div className="flex justify-center items-center gap-4 mt-25 transition-all ">
+    <div className="flex justify-center items-center gap-2 mt-16 selection:bg-black selection:text-white">
       <button
-        className={
-          currentPage == 1
-            ? ""
-            : "p-3 cursor-pointer hover:bg-gray-400 rounded-4xl"
-        }
-        onClick={() => handlePrev()}
+        disabled={currentPage === 1}
+        onClick={handlePrev}
+        className="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-100 bg-white text-gray-700 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed enabled:hover:bg-gray-50 enabled:hover:border-gray-300 enabled:cursor-pointer"
       >
-        {currentPage == 1 ? " " : <FaArrowLeft />}
+        <FaArrowLeft size={12} />
       </button>
-      {pages.map((page, i) => (
-        <button
-          key={i}
-          className={
-            page == currentPage
-              ? "active w-8 h-8 flex items-center justify-center bg-black text-white rounded cursor-pointer"
-              : "cursor-pointer"
-          }
-          onClick={() => setCurrentPage(page)}
-        >
-          {page}
-        </button>
-      ))}
+
+      <div className="flex items-center gap-1.5">
+        {pages.map((page, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrentPage(page)}
+            className={`w-10 h-10 flex items-center justify-center text-xs font-bold rounded-xl transition-all duration-200 cursor-pointer ${
+              page === currentPage
+                ? "bg-gray-950 text-white shadow-sm"
+                : "bg-white text-gray-600 border border-gray-100 hover:bg-gray-50 hover:border-gray-300"
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
+
       <button
-        className={
-          totalPages == currentPage
-            ? ""
-            : "p-3 cursor-pointer hover:bg-gray-400 rounded-4xl"
-        }
-        onClick={() => handleNext()}
+        disabled={currentPage === totalPages}
+        onClick={handleNext}
+        className="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-100 bg-white text-gray-700 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed enabled:hover:bg-gray-50 enabled:hover:border-gray-300 enabled:cursor-pointer"
       >
-        {totalPages == currentPage ? "" : <FaArrowRight />}{" "}
+        <FaArrowRight size={12} />
       </button>
     </div>
   );

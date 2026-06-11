@@ -49,13 +49,12 @@ export default function Navbar() {
       <header className="border-b border-gray-100 bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-[0_4px_30px_rgba(0,0,0,0.02)]">
         <div className="container mx-auto px-4 md:px-6 lg:px-8 py-3.5 flex justify-between items-center gap-6 lg:gap-12">
           <Link to={"/"} onClick={closeMenu} className="shrink-0 group">
-            <img
-              src="/assets/pics/Logo.webp"
-              alt="logo"
-              width="120"
-              height="32"
-              className="h-8 w-auto group-hover:opacity-80 transition-opacity"
-            />
+            <div className="group inline-flex items-center tracking-[0.25em] text-sm uppercase font-black text-gray-900 transition-colors">
+              A E T H E R
+              <span className="text-gray-300 group-hover:text-black transition-colors ml-0.5 font-normal">
+                .
+              </span>
+            </div>
           </Link>
 
           <div className="hidden md:flex items-center grow max-w-md bg-gray-50 focus-within:bg-white border border-transparent focus-within:border-gray-200 focus-within:shadow-sm rounded-xl px-4 py-2.5 transition-all duration-300">
@@ -80,7 +79,7 @@ export default function Navbar() {
                   }`
                 }
               >
-                {item === "Contact" ? "Contact Us" : item}
+                {item}
               </NavLink>
             ))}
           </nav>
@@ -171,7 +170,7 @@ export default function Navbar() {
                     }`
                   }
                 >
-                  {item === "Contact" ? "Contact Us" : item}
+                  {item}
                 </NavLink>
               ))}
             </nav>
