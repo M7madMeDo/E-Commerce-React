@@ -106,7 +106,9 @@ export default function Products({ activeCategories }) {
                   loading="lazy"
                   src={pro.thumbnail}
                   alt={pro.title}
-                  className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out mix-blend-multiply"
+                  width="195"
+                  height="195"
+                  className="max-w-full max-h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
                 />
 
                 <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-gray-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider border border-gray-100 shadow-sm">

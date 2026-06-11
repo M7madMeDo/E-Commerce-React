@@ -7,6 +7,7 @@ export default function SingleProductCard(props) {
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start max-w-7xl mx-auto px-4 py-6">
       <div className="bg-gray-50/80 border border-gray-100 p-6 md:p-12 flex items-center justify-center rounded-2xl w-full aspect-square max-h-125 shadow-sm">
         <img
+          loading="lazy"
           src={props.img}
           alt={props.title}
           loading="eager"

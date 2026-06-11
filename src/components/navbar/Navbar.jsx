@@ -52,6 +52,8 @@ export default function Navbar() {
             <img
               src="/assets/pics/Logo.webp"
               alt="logo"
+              width="120"
+              height="32"
               className="h-8 w-auto group-hover:opacity-80 transition-opacity"
             />
           </Link>
