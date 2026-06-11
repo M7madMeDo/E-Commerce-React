@@ -5,6 +5,7 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import Cookies from "js-cookie";
 import { FaHeart } from "react-icons/fa";
 import { useCart } from "../../hooks/cartSettings/CartSettings";
+import SreachInput from "../sreachInput/SreachInput";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -57,14 +58,7 @@ export default function Navbar() {
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center grow max-w-md bg-gray-50 focus-within:bg-white border border-transparent focus-within:border-gray-200 focus-within:shadow-sm rounded-xl px-4 py-2.5 transition-all duration-300">
-            <CiSearch className="text-xl text-gray-400 shrink-0" />
-            <input
-              type="text"
-              placeholder="Search products..."
-              className="bg-transparent outline-none text-sm w-full text-gray-900 placeholder-gray-400 ml-2 font-medium"
-            />
-          </div>
+          <SreachInput />
 
           <nav className="hidden lg:flex items-center gap-8">
             {["Home", "About", "Contact", "Blog"].map((item) => (
