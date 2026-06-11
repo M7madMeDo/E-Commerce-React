@@ -1,28 +1,35 @@
-E-Commerce React
-A modern, responsive e-commerce web application built with the latest React ecosystem. This project focuses on a clean user interface, seamless navigation, and efficient state management for a superior shopping experience.
+# 🛒 E-Commerce React Application
 
-🚀 Tech Stack
-Framework: React 19
+A premium, high-performance e-commerce web application crafted with a focus on a clean minimalist user interface, seamless spatial navigation, and highly efficient server & client state management.
 
-Styling: Tailwind CSS v4 (using the new @tailwindcss/vite plugin)
+---
 
-Routing: React Router v7
+## 🚀 Self-Learning Achievement
 
-Icons: React Icons
+This project was built entirely as a **self-learning initiative**. It showcases my ability to independently research, architect, and implement modern production-ready frontend workflows, master advanced state synchronization, and adopt the latest ecosystem updates without external supervision.
 
-Alerts: SweetAlert2
+---
 
-Utilities: js-cookie for client-side cookie management.
+## 🛠️ Tech Stack
 
-Build Tool: Vite
+| Layer | Technology | Description |
+| :--- | :--- | :--- |
+| **Framework** | React 19 | Latest declarative component ecosystem |
+| **Data Fetching** | React Query (TanStack) | Advanced server state management, caching, and synchronization |
+| **Build Tool** | Vite | Ultra-fast frontend tooling & bundling |
+| **Styling** | Tailwind CSS v4 | High-performance design via `@tailwindcss/vite` |
+| **Routing** | React Router v7 | Dynamic, nested client-side routing |
+| **Icons** | React Icons | Lightweight scalable vector graphics |
+| **Alerts** | SweetAlert2 | Clean, responsive modal notifications |
+| **Utilities** | js-cookie | Secure client-side session & cookie management |
 
-✨ Features
-Product Management: Browse products and view detailed information via dynamic routing.
+---
 
-Shopping Cart: Fully functional cart system with persistent settings via custom hooks.
+## ✨ Key Features
 
-User Authentication: Dedicated pages for Login, Registration, and Profile management.
-
-Responsive Layout: Uses a MainLayout component to ensure a consistent experience across all devices.
-
-Modern UI: High-performance styling with the latest Tailwind CSS version.
+* **Server State Optimization:** Powered by **React Query** to provide instant data caching (`staleTime`), background refetching, and smooth loading states for products.
+* **Advanced Product Management:** Dynamically browse product catalogs, filter by categories asynchronously, and view high-fidelity detail pages.
+* **Optimized Performance:** Fully audited rendering path targeting near-zero layout shifts (CLS) and enhanced image loading speeds.
+* **Persistent Shopping Cart:** Fully reactive cart workflows powered by custom hooks for immediate client-side persistence.
+* **Seamless Authentication:** Protected client routes and dedicated screens for Login, Registration, and User Profile configuration.
+* **Responsive Editorial Layout:** A centralized `MainLayout` structure ensuring a rigorous, fluid visual experience on mobile, tablet, and desktop viewports.
