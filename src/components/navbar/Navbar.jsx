@@ -6,11 +6,13 @@ import Cookies from "js-cookie";
 import { FaHeart } from "react-icons/fa";
 import { useCart } from "../../hooks/cartSettings/CartSettings";
 import SreachInput from "../sreachInput/SreachInput";
-
+import MiniAsideCart from "../miniAsideCart/MiniAsideCart";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [token, setToken] = useState("");
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
   const navigate = useNavigate();
   const { cartItems, wishlist } = useCart();
   const loaction = useLocation();
@@ -93,10 +95,10 @@ export default function Navbar() {
                 <FaHeart size={22} />
               </Link>
 
-              <Link
-                to="/shopCart"
+              <button
+                onClick={() => setIsCartOpen(true)}
                 aria-label="Shopping Cart"
-                className="relative text-gray-600 hover:text-black transition-colors duration-300 p-1.5 flex items-center justify-center rounded-lg hover:bg-gray-100"
+                className="relative text-gray-600 hover:text-black transition-colors duration-300 p-1.5 flex items-center justify-center rounded-lg hover:bg-gray-100 cursor-pointer"
               >
                 {cartItems.length > 0 && (
                   <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 bg-black text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 shadow-sm border-2 border-white">
@@ -104,7 +106,7 @@ export default function Navbar() {
                   </span>
                 )}
                 <CiShoppingCart size={26} strokeWidth={0.5} />
-              </Link>
+              </button>
             </div>
 
             {token ? (
@@ -186,10 +188,12 @@ export default function Navbar() {
                 <span className="text-[10px] font-semibold">Wishlist</span>
               </Link>
 
-              <Link
-                to="/shopCart"
-                onClick={closeMenu}
-                className="relative text-gray-600 hover:text-black transition-colors p-2 rounded-xl hover:bg-gray-50 flex flex-col items-center gap-1"
+              <button
+                onClick={() => {
+                  closeMenu();
+                  setIsCartOpen(true);
+                }}
+                className="relative text-gray-600 hover:text-black transition-colors p-2 rounded-xl hover:bg-gray-50 flex flex-col items-center gap-1 cursor-pointer w-full"
               >
                 <div className="relative">
                   <CiShoppingCart size={28} strokeWidth={0.5} />
@@ -200,7 +204,7 @@ export default function Navbar() {
                   )}
                 </div>
                 <span className="text-[10px] font-semibold">Cart</span>
-              </Link>
+              </button>
 
               {token && (
                 <Link
@@ -244,6 +248,8 @@ export default function Navbar() {
           </div>
         )}
       </header>
+
+      <MiniAsideCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>
   );
 }

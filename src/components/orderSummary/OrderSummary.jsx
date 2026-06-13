@@ -2,15 +2,18 @@ import Swal from "sweetalert2";
 import { useCart } from "../../hooks/cartSettings/CartSettings";
 import { FiTag, FiCreditCard, FiLock } from "react-icons/fi";
 import { useMemo } from "react";
+import { useNavigate } from "react-router";
 
 export default function OrderSummary({ cartItems = [] }) {
   const { clearCart } = useCart();
+  const navigate = useNavigate();
 
   const subtotal = useMemo(() => {
     return cartItems.reduce((acc, item) => {
       return acc + item.price * item.quantity;
     }, 0);
   }, [cartItems]);
+
   const tax = cartItems.length ? 0.14 : 0;
   const estimatedTax = subtotal * tax;
   const finalPricee = subtotal + estimatedTax;
@@ -32,10 +35,14 @@ export default function OrderSummary({ cartItems = [] }) {
         title: "Payment Done",
         showConfirmButton: false,
         timer: 1500,
+      }).then(() => {
+        clearCart();
+        navigate("/");
       });
-      clearCart();
     }
   }
+
+  const isEmpty = cartItems.length === 0;
 
   return (
     <div className="flex flex-col h-full">
@@ -55,6 +62,7 @@ export default function OrderSummary({ cartItems = [] }) {
             type="text"
             placeholder="Enter code"
             className="w-full border border-gray-100 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-50 bg-gray-50 focus:bg-white transition-all text-gray-900 font-medium placeholder-gray-400"
+            disabled={isEmpty}
           />
         </div>
       </div>
@@ -72,9 +80,17 @@ export default function OrderSummary({ cartItems = [] }) {
               type="text"
               placeholder="Card number"
               className="w-full border border-gray-100 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-gray-300 focus:ring-4 focus:ring-gray-50 bg-gray-50 focus:bg-white transition-all text-gray-900 font-medium placeholder-gray-400"
+              disabled={isEmpty}
             />
           </div>
-          <button className="bg-gray-900 text-white px-5 py-3 rounded-xl text-sm font-semibold hover:bg-blue-600 transition-all active:scale-95 shadow-sm shrink-0 cursor-pointer">
+          <button
+            disabled={isEmpty}
+            className={`px-5 py-3 rounded-xl text-sm font-semibold transition-all shadow-sm shrink-0 ${
+              isEmpty
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-gray-900 text-white hover:bg-blue-600 active:scale-95 cursor-pointer"
+            }`}
+          >
             Apply
           </button>
         </div>
@@ -110,7 +126,12 @@ export default function OrderSummary({ cartItems = [] }) {
 
       <button
         onClick={() => handleCheckout()}
-        className="w-full bg-gray-950 text-white py-4 rounded-xl font-bold hover:bg-blue-600 hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+        disabled={isEmpty}
+        className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
+          isEmpty
+            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+            : "bg-gray-950 text-white hover:bg-blue-600 hover:shadow-lg active:scale-[0.98] cursor-pointer"
+        }`}
       >
         <FiLock size={16} />
         Secure Checkout

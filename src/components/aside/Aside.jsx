@@ -25,7 +25,7 @@ export default function Aside({ onApply }) {
   useEffect(() => {
     setisMenuOpen(false);
   }, []);
-  const filteredCat = categorys.filter((cat) =>
+  const filteredCat = categorys?.filter((cat) =>
     cat.toLowerCase().includes(serach.toLowerCase()),
   );
   return (
@@ -71,9 +71,12 @@ export default function Aside({ onApply }) {
                       type="checkbox"
                       id={cat}
                       checked={selectedCategories.includes(cat)}
-                      className="w-4 h-4 accent-black rounded  shrink-0"
+                      className="w-4 h-4 accent-black rounded cursor-pointer shrink-0"
                     />
-                    <label className="capitalize text-sm text-gray-600 group-hover:text-black transition-colors select-none w-full">
+                    <label
+                      for={cat}
+                      className="capitalize text-sm text-gray-600 group-hover:text-black transition-colors select-none w-full cursor-pointer"
+                    >
                       {cat}
                     </label>
                   </li>
