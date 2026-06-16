@@ -62,15 +62,15 @@ export default function Blog() {
   const regularPosts = posts.filter((p) => !p.featured);
 
   return (
-    <div className="bg-white min-h-screen py-20 px-4 sm:px-6 lg:px-8 selection:bg-black selection:text-white">
+    <div className="bg-neutral-bg min-h-screen py-20 px-4 sm:px-6 lg:px-8 selection:bg-primary-500 selection:text-white">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 pb-8 border-b border-gray-100">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 pb-8 border-b border-neutral-light/50">
           <div>
-            <span className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-gray-400 block mb-3">
+            <span className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-neutral-dark/40 block mb-3">
               Journal & Insights
             </span>
-            <h1 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
-              The Editorial<span className="text-gray-300">.</span>
+            <h1 className="text-4xl sm:text-5xl font-black text-neutral-dark tracking-tight">
+              The Editorial<span className="text-neutral-light/60">.</span>
             </h1>
           </div>
         </div>
@@ -81,8 +81,8 @@ export default function Blog() {
               key={idx}
               className={`px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer ${
                 idx === 0
-                  ? "bg-gray-950 text-white shadow-sm"
-                  : "bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                  ? "bg-primary-500 text-white shadow-sm shadow-primary-500/10"
+                  : "bg-neutral-light text-neutral-dark/60 hover:bg-neutral-light/80 hover:text-primary-500"
               }`}
             >
               {cat}
@@ -93,7 +93,7 @@ export default function Blog() {
         <div className="space-y-16">
           {featuredPost && (
             <article className="group grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center cursor-pointer">
-              <div className="lg:col-span-7 aspect-16/10 sm:aspect-video w-full overflow-hidden bg-gray-50 rounded-4xl border border-gray-100">
+              <div className="lg:col-span-7 aspect-16/10 sm:aspect-video w-full overflow-hidden bg-neutral-light/30 rounded-4xl border border-neutral-light">
                 <img
                   src={featuredPost.image}
                   alt={featuredPost.title}
@@ -102,8 +102,8 @@ export default function Blog() {
                 />
               </div>
               <div className="lg:col-span-5 flex flex-col justify-center">
-                <div className="flex items-center gap-3 text-xs font-bold text-gray-400 mb-4">
-                  <span className="text-gray-900 px-2.5 py-1 bg-gray-50 rounded-lg border border-gray-100">
+                <div className="flex items-center gap-3 text-xs font-bold text-neutral-dark/40 mb-4">
+                  <span className="text-neutral-dark px-2.5 py-1 bg-neutral-light rounded-lg border border-neutral-light/50">
                     {featuredPost.category}
                   </span>
                   <span>•</span>
@@ -111,27 +111,27 @@ export default function Blog() {
                     <FiClock /> {featuredPost.readTime}
                   </div>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-gray-950 tracking-tight leading-tight mb-4 group-hover:text-gray-700 transition-colors duration-300 flex items-start gap-2">
+                <h2 className="text-2xl sm:text-3xl font-black text-neutral-dark tracking-tight leading-tight mb-4 group-hover:text-primary-500 transition-colors duration-300 flex items-start gap-2">
                   {featuredPost.title}
-                  <FiArrowUpRight className="text-xl shrink-0 opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-300 text-gray-400" />
+                  <FiArrowUpRight className="text-xl shrink-0 opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-300 text-neutral-dark/40" />
                 </h2>
-                <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-6 font-medium">
+                <p className="text-neutral-dark/60 text-sm sm:text-base leading-relaxed mb-6 font-medium">
                   {featuredPost.excerpt}
                 </p>
-                <span className="text-xs font-bold text-gray-400">
+                <span className="text-xs font-bold text-neutral-dark/40">
                   {featuredPost.date}
                 </span>
               </div>
             </article>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12 pt-16 border-t border-gray-100">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12 pt-16 border-t border-neutral-light/50">
             {regularPosts.map((post) => (
               <article
                 key={post.id}
                 className="group flex flex-col cursor-pointer"
               >
-                <div className="aspect-4/3 w-full overflow-hidden bg-gray-50 rounded-2xl mb-5 border border-gray-100">
+                <div className="aspect-4/3 w-full overflow-hidden bg-neutral-light/30 rounded-2xl mb-5 border border-neutral-light">
                   <img
                     src={post.image}
                     alt={post.title}
@@ -140,24 +140,24 @@ export default function Blog() {
                   />
                 </div>
 
-                <div className="flex items-center gap-3 text-[11px] font-bold text-gray-400 mb-3">
-                  <span className="text-gray-900">{post.category}</span>
+                <div className="flex items-center gap-3 text-[11px] font-bold text-neutral-dark/40 mb-3">
+                  <span className="text-neutral-dark">{post.category}</span>
                   <span>•</span>
                   <div className="flex items-center gap-1">
                     <FiClock /> {post.readTime}
                   </div>
                 </div>
 
-                <h3 className="text-lg font-extrabold text-gray-950 tracking-tight leading-snug mb-3 group-hover:text-gray-600 transition-colors duration-300 flex items-start justify-between gap-2">
+                <h3 className="text-lg font-extrabold text-neutral-dark tracking-tight leading-snug mb-3 group-hover:text-primary-500 transition-colors duration-300 flex items-start justify-between gap-2">
                   {post.title}
-                  <FiArrowUpRight className="text-base shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-gray-400 mt-1" />
+                  <FiArrowUpRight className="text-base shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-neutral-dark/40 mt-1" />
                 </h3>
 
-                <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-4 font-medium line-clamp-2">
+                <p className="text-neutral-dark/50 text-xs sm:text-sm leading-relaxed mb-4 font-medium line-clamp-2">
                   {post.excerpt}
                 </p>
 
-                <span className="text-[11px] font-bold text-gray-300 mt-auto">
+                <span className="text-[11px] font-bold text-neutral-dark/30 mt-auto">
                   {post.date}
                 </span>
               </article>

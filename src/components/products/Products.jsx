@@ -68,7 +68,7 @@ export default function Products({ activeCategories }) {
         ) : rating >= star - 0.5 ? (
           <FaStarHalfAlt size={13} />
         ) : (
-          <FaRegStar size={13} className="text-gray-300" />
+          <FaRegStar size={13} className="text-neutral-dark/20" />
         )}
       </span>
     ));
@@ -76,13 +76,13 @@ export default function Products({ activeCategories }) {
 
   return (
     <main
-      className="flex-1 w-full max-w-7xl mx-auto px-4 py-4 selection:bg-black selection:text-white"
+      className="flex-1 w-full max-w-7xl mx-auto px-4 py-4 selection:bg-primary-500 selection:text-white"
       id="products"
     >
-      <div className="mb-8 flex items-center justify-between border-b border-gray-100 pb-4">
-        <span className="text-sm font-medium text-gray-500 tracking-wide">
+      <div className="mb-8 flex items-center justify-between border-b border-neutral-light/50 pb-4">
+        <span className="text-sm font-medium text-neutral-dark/60 tracking-wide">
           Available Products:
-          <span className="font-bold text-black ml-1.5 bg-gray-100 px-2.5 py-1 rounded-md text-xs">
+          <span className="font-bold text-neutral-dark ml-1.5 bg-neutral-light px-2.5 py-1 rounded-md text-xs">
             {products.length} Items
           </span>
         </span>
@@ -90,16 +90,16 @@ export default function Products({ activeCategories }) {
 
       {isLoading ? (
         <div className="flex justify-center items-center h-96">
-          <span className="border-2 border-transparent border-t-black rounded-full w-8 h-8 animate-spin"></span>
+          <span className="border-2 border-transparent border-t-primary-500 rounded-full w-8 h-8 animate-spin"></span>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-10">
           {currentPosts.map((pro) => (
             <div
               key={pro.id}
-              className="group flex flex-col justify-between bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-transparent hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all duration-300 pb-5"
+              className="group flex flex-col justify-between bg-neutral-bg rounded-2xl overflow-hidden border border-neutral-light hover:border-transparent hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all duration-300 pb-5"
             >
-              <div className="relative aspect-square w-full bg-gray-50/60 rounded-2xl flex justify-center items-center p-8 overflow-hidden group-hover:bg-gray-100/40 transition-colors duration-300">
+              <div className="relative aspect-square w-full bg-neutral-light/30 rounded-2xl flex justify-center items-center p-8 overflow-hidden group-hover:bg-neutral-light/40 transition-colors duration-300">
                 <img
                   loading="lazy"
                   decoding="async"
@@ -110,15 +110,15 @@ export default function Products({ activeCategories }) {
                   className="max-w-full max-h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
                 />
 
-                <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-gray-600 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider border border-gray-100 shadow-sm">
+                <span className="absolute top-4 left-4 bg-neutral-bg/90 backdrop-blur-sm text-neutral-dark/60 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider border border-neutral-light shadow-sm">
                   {pro.category}
                 </span>
 
-                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <div className="absolute inset-0 bg-neutral-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <Link
                     to={`/singleProduct/${pro.id}`}
                     onClick={() => window.scrollTo(0, 0)}
-                    className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-gray-700 hover:text-white hover:bg-black shadow-sm border border-gray-100 scale-90 group-hover:scale-100 transition-all duration-300"
+                    className="flex h-11 w-11 items-center justify-center rounded-xl bg-neutral-bg text-neutral-dark/70 hover:text-white hover:bg-primary-500 shadow-sm border border-neutral-light scale-90 group-hover:scale-100 transition-all duration-300"
                   >
                     <FiEye size={18} />
                   </Link>
@@ -135,14 +135,14 @@ export default function Products({ activeCategories }) {
                   </span>
                 </div>
 
-                <h3 className="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-5 min-h-11 hover:text-gray-500 transition-colors">
+                <h3 className="text-base font-semibold text-neutral-dark line-clamp-2 leading-snug mb-5 min-h-11 hover:text-primary-500 transition-colors">
                   <Link to={`/singleProduct/${pro.id}`}>{pro.title}</Link>
                 </h3>
 
-                <div className="mt-auto flex items-center justify-between pt-3.5 border-t border-gray-50">
+                <div className="mt-auto flex items-center justify-between pt-3.5 border-t border-neutral-light/30">
                   <div className="flex flex-col">
                     {pro.discountPercentage > 0 && (
-                      <span className="text-[11px] font-bold text-gray-400 line-through decoration-gray-300 mb-0.5">
+                      <span className="text-[11px] font-bold text-neutral-dark/40 line-through decoration-neutral-light/80 mb-0.5">
                         $
                         {(
                           pro.price /
@@ -150,14 +150,14 @@ export default function Products({ activeCategories }) {
                         ).toFixed(2)}
                       </span>
                     )}
-                    <span className="text-xl font-extrabold text-gray-900 tracking-tight leading-none">
+                    <span className="text-xl font-extrabold text-neutral-dark tracking-tight leading-none">
                       ${pro.price.toFixed(2)}
                     </span>
                   </div>
 
                   <button
                     onClick={() => handleAddtoCart(pro)}
-                    className="flex items-center justify-center gap-2 bg-gray-950 hover:bg-black text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] active:scale-95 transition-all cursor-pointer group/btn"
+                    className="flex items-center justify-center gap-2 bg-primary-500 hover:bg-primary-600 text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] active:scale-95 transition-all cursor-pointer group/btn"
                   >
                     <FiShoppingCart
                       size={14}
@@ -173,7 +173,7 @@ export default function Products({ activeCategories }) {
       )}
 
       {products.length > postsPerPage && (
-        <div className="mt-20 flex justify-center border-t border-gray-100 pt-10">
+        <div className="mt-20 flex justify-center border-t border-neutral-light/50 pt-10">
           <Pagination
             totalPosts={products.length}
             postsPerPage={postsPerPage}

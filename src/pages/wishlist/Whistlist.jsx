@@ -38,19 +38,19 @@ export default function Wishlist() {
 
   if (wishlist.length === 0) {
     return (
-      <section className="container mx-auto px-4 py-20 text-center bg-white flex flex-col items-center justify-center min-h-[70vh]">
-        <div className="w-20 h-20 bg-[#F8F9FA] rounded-full flex items-center justify-center text-gray-400 mb-6 border border-[#EBEBEB]">
+      <section className="container mx-auto px-4 py-20 text-center bg-neutral-bg flex flex-col items-center justify-center min-h-[70vh]">
+        <div className="w-20 h-20 bg-neutral-light/30 rounded-full flex items-center justify-center text-neutral-dark/40 mb-6 border border-neutral-light">
           <FaHeart className="text-3xl" />
         </div>
-        <h2 className="text-2xl font-semibold text-black mb-2">
+        <h2 className="text-2xl font-semibold text-neutral-dark mb-2">
           Your Wishlist is Empty
         </h2>
-        <p className="text-[#7C7C7C] max-w-sm mb-8 text-sm sm:text-base">
+        <p className="text-neutral-dark/50 max-w-sm mb-8 text-sm sm:text-base">
           Tap the heart icon on products you love, and they'll show up here.
         </p>
         <Link
           to="/"
-          className="bg-black hover:bg-gray-800 text-white font-medium px-8 py-3.5 rounded-xl transition-all duration-200 active:scale-95"
+          className="bg-primary-500 hover:bg-primary-600 text-white font-medium px-8 py-3.5 rounded-xl transition-all duration-200 active:scale-95"
         >
           Explore Products
         </Link>
@@ -59,12 +59,12 @@ export default function Wishlist() {
   }
 
   return (
-    <section className="container mx-auto px-4 py-10 bg-white min-h-[80vh]">
-      <div className="flex items-center gap-3 mb-10 border-b border-[#F2F2F2] pb-5">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-black">
+    <section className="container mx-auto px-4 py-10 bg-neutral-bg min-h-[80vh]">
+      <div className="flex items-center gap-3 mb-10 border-b border-neutral-light/50 pb-5">
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-neutral-dark">
           My Wishlist
         </h1>
-        <span className="bg-black text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+        <span className="bg-primary-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
           {wishlist.length} Items
         </span>
       </div>
@@ -77,17 +77,17 @@ export default function Wishlist() {
           return (
             <div
               key={item.id}
-              className="bg-white border border-gray-100 rounded-2xl p-4 flex flex-col shadow-sm hover:shadow-xl transition-shadow duration-300 group relative"
+              className="bg-neutral-bg border border-neutral-light rounded-2xl p-4 flex flex-col shadow-sm hover:shadow-xl transition-shadow duration-300 group relative"
             >
               <button
                 onClick={() => delFromWishlist(item.id)}
-                className="absolute top-3 right-3 p-2 bg-white hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-full shadow-md z-10 transition-colors cursor-pointer"
+                className="absolute top-3 right-3 p-2 bg-neutral-bg hover:bg-error/10 text-neutral-dark/40 hover:text-error rounded-full shadow-md z-10 transition-colors cursor-pointer"
                 title="Remove"
               >
                 <FaTrash className="text-sm" />
               </button>
 
-              <div className="w-full h-56 flex justify-center items-center bg-[#F8F9FA] rounded-xl p-4 mb-4 overflow-hidden">
+              <div className="w-full h-56 flex justify-center items-center bg-neutral-light/30 rounded-xl p-4 mb-4 overflow-hidden">
                 <img
                   src={item.img}
                   alt={item.title}
@@ -96,10 +96,10 @@ export default function Wishlist() {
               </div>
 
               <div className="flex flex-col flex-1 text-center">
-                <h3 className="font-semibold text-gray-800 leading-snug mb-2 line-clamp-2 min-h-12">
+                <h3 className="font-semibold text-neutral-dark leading-snug mb-2 line-clamp-2 min-h-12">
                   {item.title}
                 </h3>
-                <p className="text-xl font-bold text-black mb-5">
+                <p className="text-xl font-bold text-neutral-dark mb-5">
                   ${item.price}
                 </p>
 
@@ -107,14 +107,14 @@ export default function Wishlist() {
                   {isInCart ? (
                     <button
                       disabled
-                      className="w-full bg-emerald-600 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 text-sm opacity-90 cursor-not-allowed"
+                      className="w-full bg-success text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 text-sm opacity-90 cursor-not-allowed"
                     >
                       <FaCheck /> Added To Cart
                     </button>
                   ) : (
                     <button
                       onClick={() => handleAddToCart(item)}
-                      className="w-full bg-black hover:bg-gray-800 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 cursor-pointer active:scale-95 text-sm"
+                      className="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 cursor-pointer active:scale-95 text-sm"
                     >
                       <FaShoppingCart /> Add To Cart
                     </button>
@@ -122,7 +122,7 @@ export default function Wishlist() {
 
                   <Link
                     to={`/singleProduct/${item.id}`}
-                    className="p-3 bg-gray-100 hover:bg-gray-200 text-black font-semibold rounded-xl transition-colors text-sm flex items-center justify-center"
+                    className="p-3 bg-neutral-light text-neutral-dark font-semibold rounded-xl transition-colors text-sm flex items-center justify-center hover:bg-neutral-light/80"
                     title="View Product"
                   >
                     View

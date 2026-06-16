@@ -26,11 +26,11 @@ export default function Pagination({
   };
 
   return (
-    <div className="flex justify-center items-center gap-2 mt-16 selection:bg-black selection:text-white">
+    <div className="flex justify-center items-center gap-2 mt-16 selection:bg-primary-500 selection:text-white">
       <button
         disabled={currentPage === 1}
         onClick={handlePrev}
-        className="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-100 bg-white text-gray-700 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed enabled:hover:bg-gray-50 enabled:hover:border-gray-300 enabled:cursor-pointer"
+        className="w-10 h-10 flex items-center justify-center rounded-xl border border-neutral-light bg-neutral-bg text-neutral-dark/70 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed enabled:hover:bg-neutral-light enabled:hover:border-neutral-light/80 enabled:cursor-pointer"
       >
         <FaArrowLeft size={12} />
       </button>
@@ -42,8 +42,8 @@ export default function Pagination({
             onClick={() => setCurrentPage(page)}
             className={`w-10 h-10 flex items-center justify-center text-xs font-bold rounded-xl transition-all duration-200 cursor-pointer ${
               page === currentPage
-                ? "bg-gray-950 text-white shadow-sm"
-                : "bg-white text-gray-600 border border-gray-100 hover:bg-gray-50 hover:border-gray-300"
+                ? "bg-primary-500 text-white shadow-sm shadow-primary-500/10"
+                : "bg-neutral-bg text-neutral-dark/60 border border-neutral-light hover:bg-neutral-light hover:border-neutral-light/80"
             }`}
           >
             {page}
@@ -54,7 +54,7 @@ export default function Pagination({
       <button
         disabled={currentPage === totalPages}
         onClick={handleNext}
-        className="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-100 bg-white text-gray-700 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed enabled:hover:bg-gray-50 enabled:hover:border-gray-300 enabled:cursor-pointer"
+        className="w-10 h-10 flex items-center justify-center rounded-xl border border-neutral-light bg-neutral-bg text-neutral-dark/70 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed enabled:hover:bg-neutral-light enabled:hover:border-neutral-light/80 enabled:cursor-pointer"
       >
         <FaArrowRight size={12} />
       </button>

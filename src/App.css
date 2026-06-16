@@ -35,3 +35,22 @@ ul {
 button {
   cursor: pointer;
 }
+@theme {
+  --color-primary-50: #e6f7fa;
+  --color-primary-500: #2fabe3; /* اللون الأساسي للموقع */
+  --color-primary-600: #30c2df;
+  --color-primary-700: #5b91db;
+
+  --color-secondary-500: #8473c2;
+  --color-secondary-600: #9e529a;
+
+  --color-accent: #a63168;
+
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+
+  --color-neutral-bg: #ffffff;
+  --color-neutral-dark: #1f2937;
+  --color-neutral-light: #f3f4f6;
+}

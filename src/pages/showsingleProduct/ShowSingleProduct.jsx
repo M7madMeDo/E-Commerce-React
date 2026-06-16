@@ -72,10 +72,10 @@ export default function ShowSingleProduct() {
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-white min-h-screen selection:bg-black selection:text-white">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-neutral-bg min-h-screen selection:bg-primary-500 selection:text-white">
       {isLoadingProduct ? (
         <div className="flex justify-center items-center h-[60vh] z-10">
-          <span className="border-2 border-transparent border-t-black rounded-full w-10 h-10 animate-spin"></span>
+          <span className="border-2 border-transparent border-t-primary-500 rounded-full w-10 h-10 animate-spin"></span>
         </div>
       ) : (
         singleProduct && (
@@ -97,25 +97,25 @@ export default function ShowSingleProduct() {
         )
       )}
 
-      <div className="mt-20 pt-12 border-t border-gray-100">
+      <div className="mt-20 pt-12 border-t border-neutral-light/50">
         <div className="flex items-center justify-between mb-10">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-neutral-dark tracking-tight">
             Related Products
           </h2>
         </div>
 
         {isLoadingRelated ? (
           <div className="flex justify-center items-center h-48">
-            <span className="border-2 border-transparent border-t-black rounded-full w-8 h-8 animate-spin"></span>
+            <span className="border-2 border-transparent border-t-primary-500 rounded-full w-8 h-8 animate-spin"></span>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10">
             {relatedProduct.map((pro) => (
               <div
                 key={pro.id}
-                className="group flex flex-col justify-between bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-transparent hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 pb-5"
+                className="group flex flex-col justify-between bg-neutral-bg rounded-2xl overflow-hidden border border-neutral-light hover:border-transparent hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 pb-5"
               >
-                <div className="relative aspect-square w-full bg-gray-50/60 rounded-2xl flex justify-center items-center p-6 overflow-hidden group-hover:bg-gray-100/40 transition-colors duration-300">
+                <div className="relative aspect-square w-full bg-neutral-light/30 rounded-2xl flex justify-center items-center p-6 overflow-hidden group-hover:bg-neutral-light/40 transition-colors duration-300">
                   <img
                     loading="lazy"
                     decoding="async"
@@ -124,11 +124,11 @@ export default function ShowSingleProduct() {
                     className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out mix-blend-multiply"
                   />
 
-                  <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-neutral-dark/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <Link
                       onClick={scrollToTop}
                       to={`/singleProduct/${pro.id}`}
-                      className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-gray-700 hover:text-white hover:bg-black shadow-sm border border-gray-100 scale-90 group-hover:scale-100 transition-all duration-300"
+                      className="flex h-11 w-11 items-center justify-center rounded-xl bg-neutral-bg text-neutral-dark/70 hover:text-white hover:bg-primary-500 shadow-sm border border-neutral-light scale-90 group-hover:scale-100 transition-all duration-300"
                     >
                       <FiEye size={18} />
                     </Link>
@@ -136,16 +136,16 @@ export default function ShowSingleProduct() {
                 </div>
 
                 <div className="flex flex-col flex-1 px-5 pt-4 text-left">
-                  <h3 className="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-4 min-h-11 hover:text-gray-500 transition-colors">
+                  <h3 className="text-base font-semibold text-neutral-dark line-clamp-2 leading-snug mb-4 min-h-11 hover:text-primary-500 transition-colors">
                     <Link onClick={scrollToTop} to={`/singleProduct/${pro.id}`}>
                       {pro.title}
                     </Link>
                   </h3>
 
-                  <div className="mt-auto flex items-center justify-between pt-4 border-t border-gray-50">
+                  <div className="mt-auto flex items-center justify-between pt-4 border-t border-neutral-light/30">
                     <div className="flex flex-col">
                       {pro.discountPercentage > 0 && (
-                        <span className="text-[10px] font-bold text-gray-400 line-through decoration-gray-300 mb-0.5">
+                        <span className="text-[10px] font-bold text-neutral-dark/40 line-through decoration-neutral-light/80 mb-0.5">
                           $
                           {(
                             pro.price /
@@ -153,14 +153,14 @@ export default function ShowSingleProduct() {
                           ).toFixed(2)}
                         </span>
                       )}
-                      <span className="text-lg font-extrabold text-gray-900 tracking-tight leading-none">
+                      <span className="text-lg font-extrabold text-neutral-dark tracking-tight leading-none">
                         ${pro.price.toFixed(2)}
                       </span>
                     </div>
 
                     <button
                       onClick={() => handleAddtoCart(pro)}
-                      className="flex items-center justify-center gap-2 bg-gray-950 hover:bg-black text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] active:scale-95 transition-all cursor-pointer group/btn"
+                      className="flex items-center justify-center gap-2 bg-primary-500 hover:bg-primary-600 text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-sm hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] active:scale-95 transition-all cursor-pointer group/btn"
                     >
                       <FiShoppingCart
                         size={13}
